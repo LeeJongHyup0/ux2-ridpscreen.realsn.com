@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+/* Icon Font */
+@font-face {
+  font-family: "icomoon";
+  src: url("../fonts/icomoon/icomoon.eot?5de3pc");
+  src: url("../fonts/icomoon/icomoon.eot?5de3pc#iefix") format("embedded-opentype"),
+    url("../fonts/icomoon/icomoon.ttf?5de3pc") format("truetype"), url("../fonts/icomoon/icomoon.woff?5de3pc") format("woff"),
+    url("../fonts/icomoon/icomoon.svg?5de3pc#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
