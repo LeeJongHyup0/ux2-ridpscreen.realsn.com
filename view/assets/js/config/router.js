@@ -1,8 +1,12 @@
 /* JS loader */
 let routes = [
   {
-    path: "/view/",
-    script: `${SERVER.assets}/js/pages/view.js`,
+    path: "/view/regional/",
+    script: `${SERVER.assets}/js/pages/regional.js`,
+  },
+  {
+    path: "/view/overview/",
+    script: `${SERVER.assets}/js/pages/overview.js`,
   },
 ];
 const url = location.pathname;
