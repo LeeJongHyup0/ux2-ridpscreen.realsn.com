@@ -8,7 +8,7 @@ window.cache = "?v=" + new Date().getTime();
 /* HOST */
 window.HOST = {
 	localhost: /\d+\.\d+\.\d+\.\d/.test(location.hostname) || /^localhost/.test(location.hostname) || /^design.devel.com/.test(location.hostname),    
-	publish: /^ux22-ridpscreen.realsn.com.realsn.com/.test(location.hostname) ,
+	publish: /^ux2-ridpscreen.realsn.com.realsn.com/.test(location.hostname) ,
 	develop: /^ridpscreen.devel.com/.test(location.hostname),
 	product: /^ridpscreen.realsn.com/.test(location.hostname),
 };
@@ -32,6 +32,7 @@ try {
 } catch (_err) {
 	console.log(`%c files.js %c ${_err}`, "color:yellow;background:#ffb6c16b", "color:red;");	
 }
+
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 */
