@@ -1,5 +1,5 @@
 
-<!-- reBuild :  20230310120912 -->
+<!-- reBuild :  20230314165633 -->
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -17,13 +17,13 @@
 
   <!-- STYLE -->
   <link rel="stylesheet" href="//fonts.realsn.com/libs/NotoSansKR/NotoSansKR.css">
-  <link rel="stylesheet" href="/view/assets/css/style.css?v=20230310120912">
+  <link rel="stylesheet" href="/view/assets/css/style.css?v=20230314165633">
 
   <!-- JS -->
-  <script src="/view/assets/js/config/files.js?v=20230310120912" defer></script>
-  <script src="/view/assets/js/libs.js?v=20230310120912" defer></script>
-  <script src="/view/assets/js/modules.js?v=20230310120912" defer></script>
-  <script src="/view/assets/js/config/router.js?v=20230310120912" defer></script>
+  <script src="/view/assets/js/config/files.js?v=20230314165633" defer></script>
+  <script src="/view/assets/js/libs.js?v=20230314165633" defer></script>
+  <script src="/view/assets/js/modules.js?v=20230314165633" defer></script>
+  <script src="/view/assets/js/config/router.js?v=20230314165633" defer></script>
 </head>
 
 <body>
@@ -116,17 +116,83 @@
     <div class="col-4">
       <div class="row">
         <div class="col-16">
-          <article class="l-article l-article--bg-gradient mb-20" data-article="아티클이름" data-loding-spinner="false" data-is-empty="false" style="height: 22rem">
-            <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-            <main class="l-article-body">내용</main>
+          <article class="l-article l-article--bg-gradient mb-20" data-article="전체정보량" data-loding-spinner="false" data-is-empty="false" style="height: 22rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">전체 정보량</h4></header>
+            <main class="l-article-body d-flex">
+              <span class="ml-auto mt-auto cnt">6,078</span>
+            </main>
           </article>
-          <article class="l-article  l-article--bg-gradient mb-20" data-article="아티클이름" data-loding-spinner="false" data-is-empty="false" style="height: 30rem">
-            <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-            <main class="l-article-body">내용</main>
+          <article class="l-article  l-article--bg-gradient mb-20" data-article="호감도SNPS" data-loding-spinner="false" data-is-empty="false" style="height: 30rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">호감도(SNPS)</h4></header>
+            <main class="l-article-body">
+              <div class="c-chart-gauge">
+                <span class="c-chart-gauge__bar c-chart-gauge__bar--nega"></span><span class="c-chart-gauge__bar c-chart-gauge__bar--posi"></span>
+                <span class="c-chart-gauge__arrow" style="transform: rotate(-45deg)"></span>
+                <span class="c-chart-gauge__arrow" style="transform: rotate(0deg)"></span>
+                <span class="c-chart-gauge__arrow" style="transform: rotate(90deg)"></span>
+                <span class="c-chart-gauge__num">-30%</span>
+              </div>
+            </main>
           </article>
-          <article class="l-article  l-article--bg-gradient" data-article="아티클이름" data-loding-spinner="false" data-is-empty="false" style="height: 40.4rem">
-            <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-            <main class="l-article-body">내용</main>
+          <article class="l-article  l-article--bg-gradient" data-article="Top5채널" data-loding-spinner="false" data-is-empty="false" style="height: 40.4rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">Top 5 채널</h4></header>
+            <main class="l-article-body">
+              <article class="l-article border-bottom p-10">
+                <main class="l-article-body">
+                  <div class="c-chart-bar c-chart-bar--horizontal c-chart-bar--normal">
+                    
+                    <span class="c-bullet" style="background: #B05BCE;"><i class="icon-svg-channel-instagram"></i></span>
+                    <span class="c-chart-bar__back">
+                      <span class="c-chart-bar__bar" style="width: 95%; background: #B05BCE;"></span>
+                    </span>
+                  </div>
+                  <div class="d-flex mt-8">
+                    <span class="mr-auto fs-20">인스타그램</span>
+                    <span class="cnt ml-auto fs-24">100%</span> 
+                  </div>
+                </main>
+              </article>
+            </main>
+            <article class="l-article p-10">
+              <main class="l-article-body">
+                <div class="d-flex align-center">
+                  <div class="c-chart-bar c-chart-bar--horizontal c-chart-bar--small">
+                    <span class="c-bullet c-bullet--small" style="background: #C24343;"><i class="icon-svg-channel-youtube"></i></span>
+                    <span class="c-chart-bar__back">
+                      <span class="c-chart-bar__bar" style="width: 64.3%; background: #C24343;"></span>
+                    </span>
+                  </div>
+                  <div class="cnt fs-16 color-999">64.3%</div>
+                </div>
+                <div class="d-flex align-center">
+                  <div class="c-chart-bar c-chart-bar--horizontal c-chart-bar--small">
+                    <span class="c-bullet c-bullet--small" style="background: #6BB3DC;"><i class="icon-svg-channel-twitter"></i></span>
+                    <span class="c-chart-bar__back">
+                      <span class="c-chart-bar__bar" style="width: 64.3%; background: #6BB3DC;"></span>
+                    </span>
+                  </div>
+                  <div class="cnt fs-16 color-999">64.3%</div>
+                </div>
+                <div class="d-flex align-center">
+                  <div class="c-chart-bar c-chart-bar--horizontal c-chart-bar--small">
+                    <span class="c-bullet c-bullet--small" style="background: #5754E7;"><i class="icon-svg-channel-government"></i></span>
+                    <span class="c-chart-bar__back">
+                      <span class="c-chart-bar__bar" style="width: 64.3%; background: #5754E7;"></span>
+                    </span>
+                  </div>
+                  <div class="cnt fs-16 color-999">64.3%</div>
+                </div>
+                <div class="d-flex align-center">
+                  <div class="c-chart-bar c-chart-bar--horizontal c-chart-bar--small">
+                    <span class="c-bullet c-bullet--small" style="background: #348E94;"><i class="icon-svg-channel-kin"></i></span>
+                    <span class="c-chart-bar__back">
+                      <span class="c-chart-bar__bar" style="width: 20%; background: #348E94;"></span>
+                    </span>
+                  </div>
+                  <div class="cnt fs-16 color-999">20%</div>
+                </div>
+              </main>
+            </article>
           </article>
         </div>
       </div>
@@ -134,29 +200,134 @@
     <div class="col-12">
       <div class="row mb-20">
         <div class="col-8">
-          <article class="l-article l-article--bg-gradient" data-article="아티클이름" data-loding-spinner="false" data-is-empty="false" style="height: 74.3rem">
-            <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-            <main class="l-article-body">내용</main>
+          <article class="l-article l-article--bg-gradient" data-article="Top100연관어" data-loding-spinner="false" data-is-empty="false" style="height: 74.3rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">Top100 연관어</h4></header>
+            <main class="l-article-body">
+              <div class="js-chart h-100"></div>
+            </main>
           </article>
         </div>
         <div class="col-8">
           <article class="l-article l-article--bg-gradient p-0" data-article="1depth 아티클이름" data-loding-spinner="false" data-is-empty="false" style="height: 74.3rem">            
-            <main class="l-article-body l-article-body--flex-wrap">
-              <article class="l-article w-50 h-50 border-bottom border-end" data-article="2depth 아티클이름">
-                <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-                <main class="l-article-body">내용</main>
+            <main class="l-article-body l-article-body--flex-wrap pt-10 pr-20 pb-20 pl-20">
+              <article class="l-article w-50 h-50 pt-0 pl-0 border-bottom border-end" data-article="성별">
+                <header class="l-article-header"><h4 class="l-article-header__title">성별</h4></header>
+                <main class="l-article-body p-20">
+                  <div class="d-flex justify-content-around"><span class="color-666 ml-10">남성</span><span class="mr-10">여성</span></div>
+                  <div class="js-chart"></div>
+                  <div class="d-flex justify-content-around"><span class="cnt fs-24 color-666 ml-10">72.9%</span><span class="cnt fs-24 mr-10">27.1%</span></div>
+                </main> 
               </article>
-              <article class="l-article w-50 h-50 border-bottom" data-article="2depth 아티클이름">
-                <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-                <main class="l-article-body">내용</main>
+              <article class="l-article w-50 h-50 pt-0 pr-0 border-bottom" data-article="연령별">
+                <header class="l-article-header"><h4 class="l-article-header__title">연령별</h4></header>
+                <main class="l-article-body">
+                  <div class="row h-100 text-center flex-nowrap pt-20 pr-10 pb-8 pl-15">
+                    <div class="col p-0">
+                      <span class="fs-16 color-666">10대</span>
+                      <div class="c-chart-bar c-chart-bar--vertical c-chart-bar--small pt-14 pb-6 m-auto">
+                        <span class="c-chart-bar__back">
+                          <span class="c-chart-bar__bar" style="height: 50.9%; background: #606060;"></span>
+                        </span>
+                      </div>
+                      <span class="cnt fs-16 color-666 fw-400">50.9%</span>
+                    </div>
+                    <div class="col p-0">
+                      <span class="fs-16">20대</span>
+                      <div class="c-chart-bar c-chart-bar--vertical c-chart-bar--small pt-14 pb-6 m-auto">
+                        <span class="c-chart-bar__back">
+                          
+                          <span class="c-chart-bar__bar" style="height: 100%; background: #58CBA2;"></span>
+                        </span>
+                      </div>
+                      <span class="cnt fs-16">100%</span>
+                    </div>
+                    <div class="col p-0">
+                      <span class="fs-16 color-666">30대</span>
+                      <div class="c-chart-bar c-chart-bar--vertical c-chart-bar--small pt-14 pb-6 m-auto">
+                        <span class="c-chart-bar__back">
+                          <span class="c-chart-bar__bar" style="height: 54%; background: #606060;"></span>
+                        </span>
+                      </div>
+                      <span class="cnt fs-16 color-666 fw-400">54%</span>
+                    </div>
+                    <div class="col p-0">
+                      <span class="fs-16 color-666">40대</span>
+                      <div class="c-chart-bar c-chart-bar--vertical c-chart-bar--small pt-14 pb-6 m-auto">
+                        <span class="c-chart-bar__back">
+                          <span class="c-chart-bar__bar" style="height: 30%; background: #606060;"></span>
+                        </span>
+                      </div>
+                      <span class="cnt fs-16 color-666 fw-400">30%</span>
+                    </div>
+                    <div class="col p-0">
+                      <span class="fs-16 color-666">50대</span>
+                      <div class="c-chart-bar c-chart-bar--vertical c-chart-bar--small pt-14 pb-6 m-auto">
+                        <span class="c-chart-bar__back">
+                          <span class="c-chart-bar__bar" style="height: 30%; background: #606060;"></span>
+                        </span>
+                      </div>
+                      <span class="cnt fs-16 color-666 fw-400">30%</span>
+                    </div>
+                  </div>
+                </main>
               </article>
-              <article class="l-article w-50 h-50 border-end" data-article="2depth 아티클이름">
-                <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-                <main class="l-article-body">내용</main>
+              <article class="l-article w-50 h-50 pl-0 border-end" data-article="Top3직업">
+                <header class="l-article-header"><h4 class="l-article-header__title">Top3 직업</h4></header>
+                <main class="l-article-body">
+                  <ul class="pl-10 pr-10 pt-5">
+                    <li>
+                    
+                      <div class="d-flex align-center">
+                        <div class="c-bullet" style="background: rgba(103, 86, 173, 1)"><i class="icon-svg-job-creator"></i></div>
+                        <span class="fs-20 fw-200 ml-auto">소셜크리에이터</span>
+                        <span class="cnt fs-18 ml-14 mt-3">99.9%</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex align-center">
+                        <div class="c-bullet" style="background: rgba(103, 86, 173, 0.5)"><i class="icon-svg-job-researcher"></i></div>
+                        <span class="fs-20 fw-200 ml-auto color-999">연구원</span>
+                        <span class="cnt fs-16 ml-14 mt-3 color-999">99.9%</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex align-center">
+                        <div class="c-bullet" style="background: rgba(103, 86, 173, 0.5)"><i class="icon-svg-job-businessman"></i></div>
+                        <span class="fs-20 fw-200 ml-auto color-999">사업가</span>
+                        <span class="cnt fs-16 ml-14 mt-3 color-999">99.9%</span>
+                      </div>
+                    </li>
+                  </ul>
+                </main>
               </article>
-              <article class="l-article w-50 h-50" data-article="2depth 아티클이름">
-                <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-                <main class="l-article-body">내용</main>
+              <article class="l-article w-50 h-50 pr-0" data-article="Top3관심사">
+                <header class="l-article-header"><h4 class="l-article-header__title">Top3 관심사</h4></header>
+                <main class="l-article-body">
+                  <ul class="pl-10 pr-10 pt-5">
+                    <li>
+                    
+                      <div class="d-flex align-center">
+                        <div class="c-bullet" style="background: rgba(229, 175, 35, 1)"><i class="icon-svg-interest-economy"></i></div>
+                        <span class="fs-20 fw-200 ml-auto">경제</span>
+                        <span class="cnt fs-18 ml-14 mt-3">99.9%</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex align-center">
+                        <div class="c-bullet" style="background: rgba(229, 175, 35, 0.5)"><i class="icon-svg-interest-enviroment"></i></div>
+                        <span class="fs-20 fw-200 ml-auto color-999">환경</span>
+                        <span class="cnt fs-16 ml-14 mt-3 color-999">99.9%</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="d-flex align-center">
+                        <div class="c-bullet" style="background: rgba(229, 175, 35, 0.5)"><i class="icon-svg-interest-car"></i></div>
+                        <span class="fs-20 fw-200 ml-auto color-999">자동차</span>
+                        <span class="cnt fs-16 ml-14 mt-3 color-999">99.9%</span>
+                      </div>
+                    </li>
+                  </ul>
+                </main>
               </article>
             </main>
           </article>
@@ -164,9 +335,11 @@
       </div>
       <div class="row">
         <div class="col-16">
-          <article class="l-article l-article--bg-gradient" data-article="아티클이름" data-loding-spinner="false" data-is-empty="false" style="height: 20rem">
-            <header class="l-article-header"><h4 class="l-article-header__title">아티클이름</h4></header>
-            <main class="l-article-body">내용</main>
+          <article class="l-article l-article--bg-gradient" data-article="Top5 토픽" data-loding-spinner="false" data-is-empty="false" style="height: 20rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">Top5 토픽</h4></header>
+            <main class="l-article-body">
+              <div class="js-chart">Top 5 100% 차트</div>
+            </main>
           </article>
         </div>
       </div>
@@ -175,7 +348,155 @@
 </div>
 <!-- // swiper-slide-overview1 -->
           <!-- swiper-slide-overview2 -->
-<div class="swiper-slide swiper-slide-overview2" style="height:96.4rem;border:10px solid blue">
+<div class="swiper-slide swiper-slide-overview2" style="height:96.4rem;">
+  
+  <div class="row">
+    <div class="col-8">
+      <div class="row">
+        <div class="col-16">
+          <article class="l-article l-article--bg-gradient mb-20" data-article="정보량추이" data-loding-spinner="false" data-is-empty="false" style="height: 47.2rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">정보량 추이</h4></header>
+            <main class="l-article-body d-flex">
+              딩
+            </main> 
+          </article>
+          <article class="l-article  l-article--bg-gradient" data-article="관련뉴스" data-loding-spinner="false" data-is-empty="false" style="height: 47.2rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">관련 뉴스</h4></header>
+            <main class="l-article-body">
+              <article class="l-article border-bottom pb-25" style="height: 16.5rem">
+                <main class="l-article-body">
+                  <div class="title-box">
+                    <span class="title clamp-2">LG엔솔, 美 FEPS에 전기 상용차용 배터리 공급…5만대 규모</span>
+                    <span class="fs-18 color-999">D연합뉴스</span>
+                  </div>
+                </main>
+              </article>
+            </main>
+            <article class="l-article p-10">
+              <main class="l-article-body">
+                <ul class="news-list h-100">
+                  <li class="d-flex"><span class="fs-18">LG엔솔, 美 FEPS에 전기 상용차용 배터리 공급…5만대 규모</span><span class="fs-16 color-999 ml-auto">- 뉴스인오늘</span></li>
+                  <li class="d-flex"><span class="fs-18">현대차그룹, 美 카즈닷컴 '최고의 차 어워즈' 4개부문 석권</span><span class="fs-16 color-999 ml-auto">- 한국경제TV</span></li>
+                  <li class="d-flex"><span class="fs-18">슈나이더 일렉트릭 코리아-한솔PNS, 스마트 팩토리 사업 제휴</span><span class="fs-16 color-999 ml-auto">- 뉴스인오늘</span></li>
+                  <li class="d-flex"><span class="fs-18">도봉구, '건물에너지효율화' 시공비 제로금리 융자 지원</span><span class="fs-16 color-999 ml-auto">- 피디언</span></li>
+                </ul>
+              </main>
+            </article>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="row mb-20">
+        <div class="col-8">
+          <article class="l-article l-article--bg-gradient" data-article="성별" data-loding-spinner="false" data-is-empty="false" style="height: 35rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">성별<i class="c-badge ml-11" style="background: #4C86DD">남성</i><i class="c-badge ml-11" style="background: #C64583">여성</i></h4></header>
+            <main class="l-article-body">
+              <div class="js-chart h-100"></div>
+            </main>
+          </article>
+        </div>
+        <div class="col-8">
+          <article class="l-article l-article--bg-gradient" data-article="연령별" data-loding-spinner="false" data-is-empty="false" style="height: 35rem">            
+            <header class="l-article-header"><h4 class="l-article-header__title">연령별<i class="c-badge ml-11" style="background: #58CBA2">30대</i></h4></h4></header>
+            <main class="l-article-body">
+              <div class="js-chart h-100"></div>
+            </main>
+          </article>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-16">
+          <article class="l-article l-article--bg-gradient" data-article="TPOP" data-loding-spinner="false" data-is-empty="false" style="height: 59.4rem">
+            <header class="l-article-header"><h4 class="l-article-header__title">TPOP</h4></header>
+            <main class="l-article-body">
+              <div class="row">
+                <div class="col-8">
+                  <article class="l-article p-0" data-loding-spinner="false" data-is-empty="false">
+                    <main class="l-article-body">
+                      <div class="js-chart h-100">TPOP 차트</div>
+                    </main>
+                  </article>
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-16">
+                          <article class="l-article" data-article="Time" data-loding-spinner="false" data-is-empty="false">
+                            <header class="l-article-header pb-10"><h5 class="l-article-header__title fs-24">Time</h5><span class="cnt fs-18 ml-8">00.0%</span></header>
+                            <main class="l-article-body">
+                              <ul>
+                                <li class="pb-10"><span class="cnt mr-10">01</span><span>지난해</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">02</span><span>실시간</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">03</span><span>1월</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">04</span><span>2월</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">05</span><span>오후</span></li>
+                              </ul>
+                            </main>
+                          </article>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-16">
+                          <article class="l-article" data-article="Place" data-loding-spinner="false" data-is-empty="false">
+                            <header class="l-article-header pb-10"><h5 class="l-article-header__title fs-24">Time</h5><span class="cnt fs-18 ml-8">00.0%</span></header>
+                            <main class="l-article-body">
+                              <ul>
+                                <li class="pb-10"><span class="cnt mr-10">01</span><span>전기차</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">02</span><span>교통이용장소</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">03</span><span>교육</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">04</span><span>학교</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">05</span><span>병원</span></li>
+                              </ul>
+                            </main>
+                          </article>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-16">
+                          <article class="l-article pr-0" data-article="Occasion" data-loding-spinner="false" data-is-empty="false">
+                            <header class="l-article-header pb-10"><h5 class="l-article-header__title fs-24">Occasion</h5><span class="cnt fs-18 ml-8">00.0%</span></header>
+                            <main class="l-article-body">
+                              <ul>
+                                <li class="pb-10"><span class="cnt mr-10">01</span><span>사업</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">02</span><span>서비스</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">03</span><span>투자</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">04</span><span>응원</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">05</span><span>합의</span></li>
+                              </ul>
+                            </main>
+                          </article>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-16">
+                          <article class="l-article pr-0" data-article="Person" data-loding-spinner="false" data-is-empty="false">
+                            <header class="l-article-header pb-10"><h5 class="l-article-header__title fs-24">Person</h5><span class="cnt fs-18 ml-8">00.0%</span></header>
+                            <main class="l-article-body">
+                              <ul>
+                                <li class="pb-10"><span class="cnt mr-10">01</span><span>고객</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">02</span><span>가족</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">03</span><span>파트너</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">04</span><span>인재</span></li>
+                                <li class="pb-10"><span class="cnt mr-10">05</span><span>사람</span></li>
+                              </ul>
+                            </main>
+                          </article>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- // swiper-slide-overview2 -->                
       </div>
