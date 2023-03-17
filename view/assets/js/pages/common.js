@@ -14,7 +14,6 @@ import $ from "jquery";
   const $loadingWrap = document.querySelector("#loadingWrap");
   let isState;
 
-  $wrap.setAttribute("ready", "");
   $wrap.style.opacity = 1;
   $wrap.style.visibility = "visible";
 
@@ -26,24 +25,6 @@ import $ from "jquery";
       return;
     }
 
-    // "ready"와 "start" 속성을 삭제하는 함수
-    const removeReadyAndStartAttributes = (_el) => {
-      return new Promise((_resolve) => {
-        _el.removeAttribute("ready");
-        _el.removeAttribute("start");
-        _resolve();
-      });
-    };
-
-    // "complete" 속성을 추가하는 함수
-    const addCompleteAttribute = (_el) => {
-      return new Promise((_resolve) => {
-        _el.setAttribute("complete", "");
-        _resolve();
-      });
-    };
-
-    // $loadingWrap fadeOut 처리 후 callback
     $loadingWrap
       .animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 300,
@@ -51,29 +32,14 @@ import $ from "jquery";
       })
       .finished.then(() => {
         $loadingWrap.remove();
-
-        $wrap.setAttribute("start", "");
-
-        // 2초 뒤 Promise를 사용하여 속성을 삭제하고 추가
-        setTimeout(() => {
-          removeReadyAndStartAttributes($wrap)
-            .then(() => {
-              return addCompleteAttribute($wrap);
-            })
-            .catch((_error) => {
-              console.error(_error);
-            });
-        }, 2000);
       });
   };
 
-  /* window loading 후 removeLoading() 실행 */
   window.addEventListener("load", () => {
     removeLoading();
     isState = true;
   });
 
-  /* window loading 지연시 removeLoading() 강제 실행 */
   setTimeout(() => {
     removeLoading();
     !isState &&
@@ -219,6 +185,8 @@ import $ from "jquery";
         });
         break;
       case "notys":
+        const notys = new window.Notys();
+
         setInterval(() => notys.info("데이터를 불러오고 있습니다", "right top"), 1500);
         setInterval(() => notys.success("데이터 불러오기가 완료되었습니다.<br>", "right top"), 2500);
         setInterval(() => notys.error("데이터 불러오기에 실패하였습니다.", "right top"), 3500);
