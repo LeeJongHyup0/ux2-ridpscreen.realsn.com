@@ -125,12 +125,22 @@
 
   const $article = document.querySelector(`[data-article="Top5채널"]`);
   const $bars = $article.querySelectorAll(".c-chart-bar__bar");
+  const $cnt = $article.querySelectorAll(".cnt");
   const counts = Array.from($bars).map(($bar) => $bar.getAttribute("data-count"));
 
   $bars.forEach((_$bar, _idx) => {
     const observerAdd = new window.ObserverClass($article, "is-start", {
       addCallback: () => {
         _$bar.style.width = `${counts[_idx]}%`;
+        $cnt[_idx].style.transition = "";
+        $($cnt[_idx])
+          .stop()
+          .animateNumber({
+            addComma: true,
+            totalPlayTime: 1000,
+            endNumber: counts[_idx].replace(/[^0-9]/g, ""),
+            endValue: counts[_idx].replace(/-/g, ""),
+          });
       },
     });
     const observerRemove = new window.ObserverClass($article, "is-complete", {
