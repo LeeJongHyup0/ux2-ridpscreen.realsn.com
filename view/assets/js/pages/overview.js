@@ -77,7 +77,7 @@
           totalPlayTime: 1000,
           endNumber: count.replace(/[^0-9]/g, ""),
           endValue: count.replace(/-/g, ""),
-          callback: function () {
+          callback: () => {
             $arrow.style.transform = `rotate(${percentToDegrees(count)}deg)`;
           },
         });
@@ -131,7 +131,6 @@
   $bars.forEach((_$bar, _idx) => {
     const observerAdd = new window.ObserverClass($article, "is-start", {
       addCallback: () => {
-        _$bar.style.width = `${counts[_idx]}%`;
         $cnt[_idx].style.transition = "";
         $($cnt[_idx])
           .stop()
@@ -140,6 +139,10 @@
             totalPlayTime: 1000,
             endNumber: counts[_idx].replace(/[^0-9]/g, ""),
             endValue: counts[_idx].replace(/-/g, ""),
+            callback: () => {
+              _$bar.style.width = `${counts[_idx]}%`;
+              _$bar.style.transitionDelay = `${_idx * 0.1}s`;
+            },
           });
       },
     });
