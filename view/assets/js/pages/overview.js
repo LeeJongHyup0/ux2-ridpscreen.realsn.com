@@ -1,6 +1,7 @@
 {
   /**
    *
+   *  depth : 상황판 > 첫 번째 슬라이드
    *  event : new Notys
    *  Note  : 5초 동안 화면 하단 중안에 안내 메세지 노출
    *
@@ -21,6 +22,124 @@
       }),
     1500
   );
+}
+/*
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+*/
+{
+  /**
+   *
+   *  depth : 상황판 > 첫 번째 슬라이드
+   *  block : 전체 정보량
+   *  event : new ObserverClass
+   *
+   */
+
+  const $article = document.querySelector(`[data-article="전체정보량"]`);
+  const $number = $article.querySelector(".number");
+  const count = $number.getAttribute("data-count");
+  const observerAdd = new window.ObserverClass($article, "is-start", {
+    addCallback: () => {
+      $($number)
+        .stop()
+        .animateNumber({
+          addComma: true,
+          totalPlayTime: 1000,
+          endNumber: count.replace(/[^0-9]/g, ""),
+          endValue: count,
+        });
+    },
+  });
+}
+/*
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+*/
+{
+  /**
+   *
+   *  depth : 상황판 > 첫 번째 슬라이드
+   *  block : 호감도
+   *  event : new ObserverClass
+   *
+   */
+
+  const $article = document.querySelector(`[data-article="호감도SNPS"]`);
+  const $arrow = $article.querySelector(".c-chart-gauge__arrow");
+  const $number = $article.querySelector(".c-chart-gauge__num");
+  const count = $number.getAttribute("data-count");
+  const observerAdd = new window.ObserverClass($article, "is-start", {
+    addCallback: () => {
+      $arrow.style.transition = "";
+      $($number)
+        .stop()
+        .animateNumber({
+          addComma: false,
+          totalPlayTime: 1000,
+          endNumber: count.replace(/[^0-9]/g, ""),
+          endValue: count.replace(/-/g, ""),
+          callback: function () {
+            $arrow.style.transform = `rotate(${percentToDegrees(count)}deg)`;
+          },
+        });
+    },
+  });
+  const observerRemove = new window.ObserverClass($article, "is-complete", {
+    removeCallback: () => {
+      $arrow.style.transform = "rotate(0deg)";
+      $arrow.style.transition = "none";
+    },
+  });
+
+  // 문자열 음수/양수 확인
+  function checkSign(numberString) {
+    const number = parseInt(numberString, 10);
+
+    if (number < 0) return "negative";
+    else if (number > 0) return "positive";
+    else return "zero";
+  }
+
+  if (checkSign(count) === "negative") $number.classList.add("is-negative");
+
+  // -100%에서 100%의 값을 0도에서 180도로 변환
+  function percentToDegrees(percent) {
+    const minPercent = -100;
+    const maxPercent = 100;
+    const minDegrees = -90;
+    const maxDegrees = 90;
+    const degrees = ((percent - minPercent) / (maxPercent - minPercent)) * (maxDegrees - minDegrees) + minDegrees;
+    return degrees;
+  }
+}
+/*
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+*/
+{
+  /**
+   *
+   *  depth : 상황판 > 첫 번째 슬라이드
+   *  block : Top5
+   *  event : new ObserverClass
+   *
+   */
+
+  const $article = document.querySelector(`[data-article="Top5채널"]`);
+  const $bars = $article.querySelectorAll(".c-chart-bar__bar");
+  const counts = Array.from($bars).map(($bar) => $bar.getAttribute("data-count"));
+
+  $bars.forEach((_$bar, _idx) => {
+    const observerAdd = new window.ObserverClass($article, "is-start", {
+      addCallback: () => {
+        _$bar.style.width = `${counts[_idx]}%`;
+      },
+    });
+    const observerRemove = new window.ObserverClass($article, "is-complete", {
+      removeCallback: () => {
+        _$bar.style.width = 0;
+        _$bar.style.transform = "none";
+      },
+    });
+  });
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -225,27 +344,118 @@
    *  Note  : 해당 script는 무조건 마지막에 실행되어야 합니다.
    *
    */
+
+  let activeSlides = new Array();
+  let beforeSlides = new Array();
+  let timerInit = null;
+  let timerStart = null;
+
   setTimeout(() => {
     const $swiper = document.querySelector(".swiper");
     const swiper = new Swiper($swiper, {
+      autoplay: {
+        delay: HOST.localhost === true ? 20000 : 5000,
+      },
       slidesPerView: 1,
-      loop: true,
-      // effect: "fade",
-    });
-    // MutationObserver 생성
-    const observer = new MutationObserver(() => {
-      // Swiper를 재실행할 코드 작성
-      swiper.update(); // Swiper를 업데이트하여 재실행
-      console.log("A");
+      // loop: true,
+      effect: "fade",
+      // allowTouchMove: false, // 마우스 drag 막기
+      keyboard: {
+        enabled: true, // 키보드 슬라이드 전환 활성화
+        onlyInViewport: true, // 뷰포트 내에서만 키보드 동작 활성화
+      },
+      on: {
+        init() {
+          // new TransitionElement
+          const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
+
+          $articles.forEach((_$article, _idx) => {
+            timerInit = setTimeout(() => {
+              const transitionElement = new window.TransitionElement(_$article);
+
+              activeSlides.push(transitionElement);
+              transitionElement.isEventListenerAdded = true;
+              transitionElement.initialize();
+            }, _idx * 100);
+          });
+        },
+        slideChangeTransitionStart: function () {
+          // setTimeout 초기화
+          beforeSlides = activeSlides;
+          activeSlides = new Array();
+          clearTimeout(timerInit);
+          clearTimeout(timerStart);
+
+          // new TransitionElement
+          const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
+
+          $articles.forEach((_$article, _idx) => {
+            timerStart = setTimeout(() => {
+              const transitionElement = new window.TransitionElement(_$article);
+
+              activeSlides.push(transitionElement);
+              transitionElement.isEventListenerAdded = true;
+              transitionElement.initialize();
+            }, _idx * 100);
+          });
+        },
+        slideChangeTransitionEnd: function () {
+          // setTimeout 초기화
+          beforeSlides.forEach((_slide) => {
+            clearTimeout(_slide.timer1);
+            clearTimeout(_slide.timer2);
+          });
+
+          // 숨겨진 slide의 article 요소 classList 초기화
+          const disableIdx = Array.from(this.slides).findIndex((_slide) => !_slide.classList.contains("swiper-slide-active"));
+          const $articles = this.slides[disableIdx].querySelectorAll(".l-article--bg-gradient");
+
+          $articles.forEach((_$article) => {
+            _$article.classList.remove("is-start");
+            _$article.classList.remove("is-complete");
+            _$article.classList.add("is-ready");
+          });
+        },
+      },
     });
 
-    // Observer 옵션 설정
-    const observerOptions = {
-      childList: true, // 하위 요소의 추가/삭제를 감지
-      subtree: true, // 하위 요소의 모든 변화를 감지
-    };
+    // 오른쪽 마우스 drag 만 적용
+    // let startX;
+    // let endX;
 
-    // Observer 시작
-    observer.observe($swiper, observerOptions);
+    // $swiper.addEventListener("mousedown", (e) => {
+    //   startX = e.clientX;
+    // });
+
+    // $swiper.addEventListener("mouseup", (e) => {
+    //   endX = e.clientX;
+    //   triggerRightArrow(startX, endX);
+    // });
+
+    // function triggerRightArrow(startX, endX) {
+    //   const dragThreshold = 50; // Change this value to adjust the required drag distance
+    //   if (endX - startX < dragThreshold) {
+    //     swiper.slideNext();
+    //   }
+    // }
+
+    // // MutationObserver 생성
+    // const observer = new MutationObserver(() => {
+    //   // Swiper를 재실행할 코드 작성
+    //   swiper.update(); // Swiper를 업데이트하여 재실행
+    //   console.log("swiper update");
+    // });
+
+    // // Observer 옵션 설정
+    // const observerOptions = {
+    //   childList: true, // 하위 요소의 추가/삭제를 감지
+    //   subtree: true, // 하위 요소의 모든 변화를 감지
+    // };
+
+    // // Observer 시작
+    // observer.observe($swiper, observerOptions);
   }, 1500);
 }
+/*
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+*/

@@ -1,6 +1,7 @@
 {
   /**
    *
+   *  depth : 지역설정
    *  event : new Notys
    *  Note  : 5초 동안 화면 하단 중안에 안내 메세지 노출
    *
@@ -26,42 +27,17 @@
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 */
 {
-  const $section = document.querySelector("[data-section=지역설정]");
+  /**
+   *
+   *  depth : 지역설정
+   *  block : [data-section=지역설정]
+   *  event : new TransitionElement
+   *
+   */
 
-  // "ready"와 "start" 속성을 삭제하는 함수
-  const removeReadyAndStartAttributes = (_el) => {
-    return new Promise((_resolve) => {
-      $section.classList.remove("is-ready");
-      $section.classList.remove("is-start");
-      _resolve();
-    });
-  };
-
-  // "complete" 속성을 추가하는 함수
-  const addCompleteAttribute = (_el) => {
-    return new Promise((_resolve) => {
-      $section.classList.add("is-complete");
-      _resolve();
-    });
-  };
-
-  // Run after loading
-  document.addEventListener("readystatechange", (event) => {
-    if (event.target.readyState === "complete") {
-      $section.classList.add("is-start");
-
-      // 2초 뒤 Promise를 사용하여 속성을 삭제하고 추가
-      setTimeout(() => {
-        removeReadyAndStartAttributes($section)
-          .then(() => {
-            return addCompleteAttribute($section);
-          })
-          .catch((_error) => {
-            console.error(_error);
-          });
-      }, 1500);
-    }
-  });
+  const $el = document.querySelector("[data-section=지역설정]");
+  const transitionElement = new TransitionElement($el);
+  transitionElement.initialize();
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
