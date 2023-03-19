@@ -37,7 +37,7 @@
 
   const $el = document.querySelector("[data-section=지역설정]");
   const transitionElement = new TransitionElement($el);
-  transitionElement.initialize();
+  transitionElement.init();
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■

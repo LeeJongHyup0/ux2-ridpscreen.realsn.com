@@ -31,25 +31,35 @@
    *
    *  depth : 상황판 > 첫 번째 슬라이드
    *  block : 전체 정보량
-   *  event : new ObserverClass
+   *  event : new ObserverClass & new DataWatcher
    *
    */
 
   const $article = document.querySelector(`[data-article="전체정보량"]`);
   const $number = $article.querySelector(".number");
-  const count = $number.getAttribute("data-count");
-  const observerAdd = new window.ObserverClass($article, "is-start", {
-    addCallback: () => {
-      $($number)
-        .stop()
-        .animateNumber({
-          addComma: true,
-          totalPlayTime: 1000,
-          endNumber: count.replace(/[^0-9]/g, ""),
-          endValue: count,
-        });
-    },
+  const observerClass = new window.ObserverClass($article, "is-start");
+  const dataWatcher = new window.DataWatcher();
+
+  // 애니메이션 효과를 적용
+  const animateTargetNumber = (_data) => {
+    $($number)
+      .stop()
+      .animateNumber({
+        addComma: true,
+        totalPlayTime: 1000,
+        endNumber: typeof _data === "number" ? _data : _data.replace(/[^0-9]/g, ""),
+        endValue: _data,
+      });
+  };
+
+  // 값(변수) 변경될 때마다 콜백 메소드 호출
+  dataWatcher.callback(() => {
+    if ($article.classList.contains("is-complete")) animateTargetNumber(dataWatcher.data);
+    else observerClass.addCallback(() => animateTargetNumber(dataWatcher.data));
   });
+
+  // 초기값
+  dataWatcher.data = 6023;
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -59,57 +69,68 @@
    *
    *  depth : 상황판 > 첫 번째 슬라이드
    *  block : 호감도
-   *  event : new ObserverClass
+   *  event : new ObserverClass & new DataWatcher
    *
    */
 
   const $article = document.querySelector(`[data-article="호감도SNPS"]`);
   const $arrow = $article.querySelector(".c-chart-gauge__arrow");
   const $number = $article.querySelector(".c-chart-gauge__num");
-  const count = $number.getAttribute("data-count");
-  const observerAdd = new window.ObserverClass($article, "is-start", {
-    addCallback: () => {
-      $arrow.style.transition = "";
-      $($number)
-        .stop()
-        .animateNumber({
-          addComma: false,
-          totalPlayTime: 1000,
-          endNumber: count.replace(/[^0-9]/g, ""),
-          endValue: count.replace(/-/g, ""),
-          callback: () => {
-            $arrow.style.transform = `rotate(${percentToDegrees(count)}deg)`;
-          },
-        });
-    },
-  });
-  const observerRemove = new window.ObserverClass($article, "is-complete", {
-    removeCallback: () => {
-      $arrow.style.transform = "rotate(0deg)";
-      $arrow.style.transition = "none";
-    },
-  });
+  const observerAddClass = new window.ObserverClass($article, "is-start");
+  const observerRemoveClass = new window.ObserverClass($article, "is-complete");
+  const dataWatcher = new window.DataWatcher();
 
   // 문자열 음수/양수 확인
-  function checkSign(numberString) {
-    const number = parseInt(numberString, 10);
+  const checkSign = (_numberString) => {
+    const number = parseInt(_numberString, 10);
 
     if (number < 0) return "negative";
     else if (number > 0) return "positive";
     else return "zero";
-  }
-
-  if (checkSign(count) === "negative") $number.classList.add("is-negative");
+  };
 
   // -100%에서 100%의 값을 0도에서 180도로 변환
-  function percentToDegrees(percent) {
+  const percentToDegrees = (_percent) => {
     const minPercent = -100;
     const maxPercent = 100;
     const minDegrees = -90;
     const maxDegrees = 90;
-    const degrees = ((percent - minPercent) / (maxPercent - minPercent)) * (maxDegrees - minDegrees) + minDegrees;
+    const degrees = ((_percent - minPercent) / (maxPercent - minPercent)) * (maxDegrees - minDegrees) + minDegrees;
     return degrees;
-  }
+  };
+
+  // 애니메이션 효과를 적용
+  const animateTargetNumber = (_data) => {
+    checkSign(_data) === "negative" ? $number.classList.add("is-negative") : $number.classList.remove("is-negative");
+    $arrow.style.transition = "";
+
+    $($number)
+      .stop()
+      .animateNumber({
+        addComma: false,
+        totalPlayTime: 1000,
+        endNumber: _data.replace(/[^0-9]/g, ""),
+        endValue: _data.replace(/-/g, ""),
+        callback: () => {
+          $arrow.style.transform = `rotate(${percentToDegrees(_data)}deg)`;
+        },
+      });
+  };
+
+  // 값(변수) 변경될 때마다 콜백 메소드 호출
+  dataWatcher.callback(() => {
+    if ($article.classList.contains("is-complete")) animateTargetNumber(dataWatcher.data);
+    else {
+      observerAddClass.addCallback(() => animateTargetNumber(dataWatcher.data));
+      observerRemoveClass.removeCallback(() => {
+        $arrow.style.transform = "rotate(0deg)";
+        $arrow.style.transition = "none";
+      });
+    }
+  });
+
+  // 초기값
+  dataWatcher.data = "-30"; //문자열로 -100 ~ 100 사이값
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -119,40 +140,59 @@
    *
    *  depth : 상황판 > 첫 번째 슬라이드
    *  block : Top5
-   *  event : new ObserverClass
+   *  event : new ObserverClass & new DataWatcher
    *
    */
 
   const $article = document.querySelector(`[data-article="Top5채널"]`);
   const $bars = $article.querySelectorAll(".c-chart-bar__bar");
-  const $cnt = $article.querySelectorAll(".cnt");
-  const counts = Array.from($bars).map(($bar) => $bar.getAttribute("data-count"));
+  const $cnts = $article.querySelectorAll(".cnt");
+  const dataWatcher = new window.DataWatcher();
+  const animationDuration = 1000;
 
-  $bars.forEach((_$bar, _idx) => {
-    const observerAdd = new window.ObserverClass($article, "is-start", {
-      addCallback: () => {
-        $cnt[_idx].style.transition = "";
-        $($cnt[_idx])
-          .stop()
-          .animateNumber({
-            addComma: true,
-            totalPlayTime: 1000,
-            endNumber: counts[_idx].replace(/[^0-9]/g, ""),
-            endValue: counts[_idx].replace(/-/g, ""),
-            callback: () => {
-              _$bar.style.width = `${counts[_idx]}%`;
-              _$bar.style.transitionDelay = `${_idx * 0.1}s`;
-            },
-          });
-      },
+  // 애니메이션 효과를 적용
+  const animateTargetNumber = (_$bar, _idx, _data) => {
+    $cnts[_idx].style.transition = "";
+    _$bar.style.width = 0;
+    _$bar.style.transition = "none";
+
+    $($cnts[_idx])
+      .stop()
+      .animateNumber({
+        addComma: false,
+        totalPlayTime: animationDuration,
+        endNumber: _data,
+        endValue: _data,
+        callback: () => {
+          _$bar.style.width = `${_data}%`;
+          _$bar.style.transition = "";
+          _$bar.style.transitionDelay = `${_idx * 0.05}s`;
+        },
+      });
+  };
+
+  // 값(변수) 변경될 때마다 콜백 메소드 호출
+  dataWatcher.callback(() => {
+    $bars.forEach((_$bar, _idx) => {
+      setTimeout(() => {
+        animateTargetNumber(_$bar, _idx, dataWatcher.data[_idx]);
+      }, animationDuration + 500); // animationDuration + 500ms 뒤에 애니메이션 실행
     });
-    const observerRemove = new window.ObserverClass($article, "is-complete", {
-      removeCallback: () => {
+
+    $bars.forEach((_$bar, _idx) => {
+      const observerAddClass = new window.ObserverClass($article, "is-start");
+      observerAddClass.addCallback(() => animateTargetNumber(_$bar, _idx, dataWatcher.data[_idx]));
+
+      const observerRemoveClass = new window.ObserverClass($article, "is-complete");
+      observerRemoveClass.removeCallback(() => {
         _$bar.style.width = 0;
         _$bar.style.transform = "none";
-      },
+      });
     });
   });
+
+  // 초기값
+  dataWatcher.data = [90, 65.3, 44, 32.1, 20];
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -367,7 +407,7 @@
     const $swiper = document.querySelector(".swiper");
     const swiper = new Swiper($swiper, {
       autoplay: {
-        delay: HOST.localhost === true ? 20000 : 5000,
+        delay: HOST.localhost === true ? 9999999 : 5000,
       },
       slidesPerView: 1,
       // loop: true,
@@ -388,7 +428,7 @@
 
               activeSlides.push(transitionElement);
               transitionElement.isEventListenerAdded = true;
-              transitionElement.initialize();
+              transitionElement.init();
             }, _idx * 100);
           });
         },
@@ -408,7 +448,7 @@
 
               activeSlides.push(transitionElement);
               transitionElement.isEventListenerAdded = true;
-              transitionElement.initialize();
+              transitionElement.init();
             }, _idx * 100);
           });
         },

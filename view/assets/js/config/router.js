@@ -2,11 +2,11 @@
 let routes = [
   {
     path: "/view/regional/",
-    script: `${SERVER.assets}/js/pages/regional.js`,
+    script: [`${SERVER.assets}/js/pages/regional.js`],
   },
   {
     path: "/view/overview/",
-    script: `${SERVER.assets}/js/pages/overview.js`,
+    script: [`${SERVER.assets}/js/pages/overview.js`],
   },
 ];
 const url = location.pathname;
