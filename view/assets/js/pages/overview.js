@@ -483,7 +483,7 @@
   const $swiper = document.querySelector(".swiper");
   const swiper = new Swiper($swiper, {
     autoplay: {
-      delay: 1000,
+      delay: 8000,
       disableOnInteraction: false,
     },
     slidesPerView: 1,
