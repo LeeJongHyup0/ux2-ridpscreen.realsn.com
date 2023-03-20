@@ -455,11 +455,36 @@
     });
   };
 
+  // swiper active index 정보를 URL 파라미터 전송
+  const activeParams = (_activeIndex) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("slideActiveIndex", _activeIndex);
+    const newUrl = window.location.pathname + "?" + urlParams.toString();
+    window.history.pushState({ path: newUrl }, "", newUrl);
+  };
+
+  // URL 파라미터 체크 후 해당 slide active 상태로 변경
+  const checkSwiperParams = (_swiper, _activeIndex) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const autoplay = urlParams.get("autoplay");
+    const slideActiveIndex = urlParams.get("slideActiveIndex");
+    console.log(autoplay, slideActiveIndex);
+
+    if (slideActiveIndex !== _activeIndex && slideActiveIndex !== null) {
+      _swiper.slideTo(Number(slideActiveIndex), 0, false);
+    }
+
+    if (autoplay === "stop") {
+      _swiper.autoplay.stop();
+    }
+  };
+
   // swiper
   const $swiper = document.querySelector(".swiper");
   const swiper = new Swiper($swiper, {
     autoplay: {
-      delay: HOST.localhost === true ? 30000 : 7000,
+      delay: 1000,
+      disableOnInteraction: false,
     },
     slidesPerView: 1,
     // loop: true,
@@ -484,6 +509,8 @@
         // new TransitionElement
         const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
         transitionArticle($articles);
+        checkSwiperParams(this, this.activeIndex);
+        activeParams(this.activeIndex);
       },
       slideChangeTransitionStart: function () {
         // class 백업 및 초기화
@@ -493,9 +520,10 @@
         // new TransitionElement
         const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
         transitionArticle($articles);
+        activeParams(this.activeIndex);
       },
       slideChangeTransitionEnd: function () {
-        // class 내부 setTimeout 초기화
+        // class(= transitionElement) 내부 setTimeout 초기화
         beforeClasses.forEach((_slide) => {
           clearTimeout(_slide.timer1);
           clearTimeout(_slide.timer2);
