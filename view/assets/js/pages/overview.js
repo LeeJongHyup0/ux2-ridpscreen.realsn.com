@@ -8,8 +8,7 @@
    */
 
   const notys = new window.Notys();
-
-  setTimeout(
+  const timer = setTimeout(
     () =>
       notys.success(`키보드 "F11"를 누르고 전체화면 모드로 사용해주세요`, "center bottom", {
         delay: 5000, //기본값 : 3000 (3초)
@@ -20,7 +19,7 @@
           },
         },
       }),
-    1500
+    3000
   );
 }
 /*
@@ -37,7 +36,7 @@
 
   const $article = document.querySelector(`[data-article="전체정보량"]`);
   const $number = $article.querySelector(".number");
-  const observerClass = new window.ObserverClass($article, "is-start");
+  const observerClassIsStart = new window.ObserverClass($article, "is-start");
   const dataWatcher = new window.DataWatcher();
 
   // 애니메이션 효과를 적용
@@ -46,7 +45,7 @@
       .stop()
       .animateNumber({
         addComma: true,
-        totalPlayTime: 1000,
+        totalPlayTime: 600,
         endNumber: typeof _data === "number" ? _data : _data.replace(/[^0-9]/g, ""),
         endValue: _data,
       });
@@ -55,7 +54,7 @@
   // 값(변수) 변경될 때마다 콜백 메소드 호출
   dataWatcher.callback(() => {
     if ($article.classList.contains("is-complete")) animateTargetNumber(dataWatcher.data);
-    else observerClass.addCallback(() => animateTargetNumber(dataWatcher.data));
+    else observerClassIsStart.addCallback(() => animateTargetNumber(dataWatcher.data));
   });
 
   // 초기값
@@ -76,8 +75,8 @@
   const $article = document.querySelector(`[data-article="호감도SNPS"]`);
   const $arrow = $article.querySelector(".c-chart-gauge__arrow");
   const $number = $article.querySelector(".c-chart-gauge__num");
-  const observerAddClass = new window.ObserverClass($article, "is-start");
-  const observerRemoveClass = new window.ObserverClass($article, "is-complete");
+  const observerClassIsStart = new window.ObserverClass($article, "is-start");
+  const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
   const dataWatcher = new window.DataWatcher();
 
   // 문자열 음수/양수 확인
@@ -108,7 +107,7 @@
       .stop()
       .animateNumber({
         addComma: false,
-        totalPlayTime: 1000,
+        totalPlayTime: 600,
         endNumber: _data.replace(/[^0-9]/g, ""),
         endValue: _data.replace(/-/g, ""),
         callback: () => {
@@ -121,8 +120,8 @@
   dataWatcher.callback(() => {
     if ($article.classList.contains("is-complete")) animateTargetNumber(dataWatcher.data);
     else {
-      observerAddClass.addCallback(() => animateTargetNumber(dataWatcher.data));
-      observerRemoveClass.removeCallback(() => {
+      observerClassIsStart.addCallback(() => animateTargetNumber(dataWatcher.data));
+      observerClassIsComplete.removeCallback(() => {
         $arrow.style.transform = "rotate(0deg)";
         $arrow.style.transition = "none";
       });
@@ -148,7 +147,7 @@
   const $bars = $article.querySelectorAll(".c-chart-bar__bar");
   const $cnts = $article.querySelectorAll(".cnt");
   const dataWatcher = new window.DataWatcher();
-  const animationDuration = 1000;
+  const animationDuration = 600;
 
   // 애니메이션 효과를 적용
   const animateTargetNumber = (_$bar, _idx, _data) => {
@@ -180,11 +179,11 @@
     });
 
     $bars.forEach((_$bar, _idx) => {
-      const observerAddClass = new window.ObserverClass($article, "is-start");
-      observerAddClass.addCallback(() => animateTargetNumber(_$bar, _idx, dataWatcher.data[_idx]));
+      const ObserverClassIsStart = new window.ObserverClass($article, "is-start");
+      ObserverClassIsStart.addCallback(() => animateTargetNumber(_$bar, _idx, dataWatcher.data[_idx]));
 
-      const observerRemoveClass = new window.ObserverClass($article, "is-complete");
-      observerRemoveClass.removeCallback(() => {
+      const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
+      observerClassIsComplete.removeCallback(() => {
         _$bar.style.width = 0;
         _$bar.style.transform = "none";
       });
@@ -200,33 +199,65 @@
 {
   const $article = document.querySelector(".swiper-slide-overview1 [data-article=Top100연관어]");
   const $chart = $article.querySelector(".js-chart");
+  const observerClassIsStart = new window.ObserverClass($article, "is-start");
 
-  let datas = [
-    { name: "시스템", fill: "#EA704A", value: 1100, fluc: 38.7 },
-    { name: "현재", fill: "#EA704A", value: 536, fluc: 38.7 },
-    { name: "정보", fill: "#EA704A", value: 368, fluc: 38 },
-    { name: "쉽다", fill: "#EA704A", value: 363, fluc: 38 },
-    { name: "가격", fill: "#EA704A", value: 358, fluc: 38.7 },
-    { name: "어렵다", fill: "#EA704A", value: 312, fluc: 38.7 },
-    { name: "개발", fill: "#EA704A", value: 271, fluc: 38.7 },
-    { name: "사용문의", fill: "#ffffff", value: 255, fluc: 38.7 },
-    { name: "지역", fill: "#ffffff", value: 235, fluc: -40.1 },
-    { name: "평가", fill: "#ffffff", value: 267, fluc: -40.1 },
-    { name: "단품", fill: "#ffffff", value: 1100, fluc: 38.7 },
-    { name: "높다", fill: "#ffffff", value: 536, fluc: 38.7 },
-    { name: "인프라", fill: "#666666", value: 333, fluc: 38.7 },
-    { name: "스마트하다", fill: "#666666", value: 222, fluc: 38.7 },
-    { name: "설비", fill: "#666666", value: 111, fluc: 38.7 },
-    { name: "에너지 절감", fill: "#666666", value: 100, fluc: 38.7 },
-    { name: "차량", fill: "#666666", value: 100, fluc: 38.7 },
-    { name: "솔루션", fill: "#666666", value: 100, fluc: 38.7 },
-    { name: "미국", fill: "#666666", value: 100, fluc: 38.7 },
-    { name: "효과적인", fill: "#666666", value: 100, fluc: 38.7 },
-    { name: "통합", fill: "#666666", value: 100, fluc: 38.7 },
-  ];
+  // AMchart
+  am5.ready(function () {
+    var root = am5.Root.new($chart);
 
-  const DidpWordcloud = new rsnCharts.DidpWordcloud($chart);
-  DidpWordcloud.reDataBinding(datas);
+    // Set themes
+    root.setThemes([am5themes_Animated.new(root), am5themes_Responsive.new(root)]);
+
+    // Add series
+    var series = root.container.children.push(
+      am5wc.WordCloud.new(root, {
+        categoryField: "name",
+        valueField: "value",
+        minFontSize: am5.percent(4),
+        maxFontSize: am5.percent(15),
+      })
+    );
+
+    // Configure labels
+    series.labels.template.setAll({
+      templateField: "labelSettings",
+    });
+
+    // Data from
+    observerClassIsStart.addCallback(() => {
+      series.data.setAll([
+        { name: "시스템", labelSettings: { fill: am5.color(0xea704a) }, value: 1100, fluc: 38.7 },
+        { name: "현재", labelSettings: { fill: am5.color(0xea704a) }, value: 536, fluc: 38.7 },
+        { name: "정보", labelSettings: { fill: am5.color(0xea704a) }, value: 368, fluc: 38 },
+        { name: "쉽다", labelSettings: { fill: am5.color(0xea704a) }, value: 363, fluc: 38 },
+        { name: "가격", labelSettings: { fill: am5.color(0xea704a) }, value: 358, fluc: 38.7 },
+        { name: "어렵다", labelSettings: { fill: am5.color(0xea704a) }, value: 312, fluc: 38.7 },
+        { name: "개발", labelSettings: { fill: am5.color(0xea704a) }, value: 271, fluc: 38.7 },
+        { name: "사용문의", labelSettings: { fill: am5.color(0xffffff) }, value: 255, fluc: 38.7 },
+        { name: "지역", labelSettings: { fill: am5.color(0xffffff) }, value: 235, fluc: -40.1 },
+        { name: "평가", labelSettings: { fill: am5.color(0xffffff) }, value: 267, fluc: -40.1 },
+        { name: "단품", labelSettings: { fill: am5.color(0xffffff) }, value: 1100, fluc: 38.7 },
+        { name: "높다", labelSettings: { fill: am5.color(0xffffff) }, value: 536, fluc: 38.7 },
+        { name: "인프라", labelSettings: { fill: am5.color(0x666666) }, value: 333, fluc: 38.7 },
+        { name: "스마트하다", labelSettings: { fill: am5.color(0x666666) }, value: 222, fluc: 38.7 },
+        { name: "설비", labelSettings: { fill: am5.color(0x666666) }, value: 111, fluc: 38.7 },
+        { name: "에너지 절감", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
+        { name: "차량", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
+        { name: "솔루션", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
+        { name: "미국", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
+        { name: "효과적인", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
+        { name: "통합", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
+        { name: "낮다", labelSettings: { fill: am5.color(0xffffff) }, value: 235, fluc: -40.1 },
+        { name: "기타", labelSettings: { fill: am5.color(0xea704a) }, value: 267, fluc: -40.1 },
+        { name: "연비", labelSettings: { fill: am5.color(0xffffff) }, value: 1100, fluc: 38.7 },
+        { name: "태양광", labelSettings: { fill: am5.color(0xffffff) }, value: 536, fluc: 38.7 },
+        { name: "운영", labelSettings: { fill: am5.color(0x666666) }, value: 333, fluc: 38.7 },
+        { name: "자연친화", labelSettings: { fill: am5.color(0x666666) }, value: 222, fluc: 38.7 },
+        { name: "최적화", labelSettings: { fill: am5.color(0xea704a) }, value: 111, fluc: 38.7 },
+        { name: "원자력 발전", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
+      ]);
+    });
+  });
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -354,6 +385,8 @@
 {
   const $article = document.querySelector(".swiper-slide-overview2 [data-article=정보량추이]");
   const $chart = $article.querySelector(".js-chart");
+  const observerClassIsStart = new window.ObserverClass($article, "is-start");
+  const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
 
   let data = [
     { category: "1/8", snps: 25, pareto: 0 },
@@ -377,14 +410,18 @@
     { category: "1/26", snps: 41, pareto: 12 },
     { category: "1/27", snps: 41, pareto: 12 },
   ];
+
   const didpLineNcolumnChart = new rsnCharts.DidpLineNcolumnChart($chart);
-  didpLineNcolumnChart.reDataBinding(data);
+
   didpLineNcolumnChart.options = {
     animate: {
       play: true, // Boolean / 기본값 - Booleantrue
       duration: 600, // Number /  기본값 sec - 600
     },
   };
+
+  observerClassIsStart.addCallback(() => didpLineNcolumnChart.reDataBinding(data));
+  observerClassIsComplete.removeCallback(() => didpLineNcolumnChart.timers.forEach((_timer) => clearTimeout(_timer)));
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -398,116 +435,105 @@
    *
    */
 
-  let activeSlides = new Array();
-  let beforeSlides = new Array();
-  let timerInit = null;
-  let timerStart = null;
+  let activeClasses = new Array();
+  let beforeClasses = new Array();
 
-  setTimeout(() => {
-    const $swiper = document.querySelector(".swiper");
-    const swiper = new Swiper($swiper, {
-      autoplay: {
-        delay: HOST.localhost === true ? 9999999 : 5000,
-      },
-      slidesPerView: 1,
-      // loop: true,
-      effect: "fade",
-      // allowTouchMove: false, // 마우스 drag 막기
-      keyboard: {
-        enabled: true, // 키보드 슬라이드 전환 활성화
-        onlyInViewport: true, // 뷰포트 내에서만 키보드 동작 활성화
-      },
-      on: {
-        init() {
-          // new TransitionElement
-          const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
+  // transition
+  const transitionArticle = (_$articles) => {
+    _$articles.forEach((_$article, _idx) => {
+      const transitionElement = new window.TransitionElement(_$article);
 
-          $articles.forEach((_$article, _idx) => {
-            timerInit = setTimeout(() => {
-              const transitionElement = new window.TransitionElement(_$article);
-
-              activeSlides.push(transitionElement);
-              transitionElement.isEventListenerAdded = true;
-              transitionElement.init();
-            }, _idx * 100);
-          });
-        },
-        slideChangeTransitionStart: function () {
-          // setTimeout 초기화
-          beforeSlides = activeSlides;
-          activeSlides = new Array();
-          clearTimeout(timerInit);
-          clearTimeout(timerStart);
-
-          // new TransitionElement
-          const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
-
-          $articles.forEach((_$article, _idx) => {
-            timerStart = setTimeout(() => {
-              const transitionElement = new window.TransitionElement(_$article);
-
-              activeSlides.push(transitionElement);
-              transitionElement.isEventListenerAdded = true;
-              transitionElement.init();
-            }, _idx * 100);
-          });
-        },
-        slideChangeTransitionEnd: function () {
-          // setTimeout 초기화
-          beforeSlides.forEach((_slide) => {
-            clearTimeout(_slide.timer1);
-            clearTimeout(_slide.timer2);
-          });
-
-          // 숨겨진 slide의 article 요소 classList 초기화
-          const disableIdx = Array.from(this.slides).findIndex((_slide) => !_slide.classList.contains("swiper-slide-active"));
-          const $articles = this.slides[disableIdx].querySelectorAll(".l-article--bg-gradient");
-
-          $articles.forEach((_$article) => {
-            _$article.classList.remove("is-start");
-            _$article.classList.remove("is-complete");
-            _$article.classList.add("is-ready");
-          });
-        },
-      },
+      transitionElement.isStartDelay = _idx * 200; // fadeIn 시간차 적용
+      transitionElement.isEventListenerAdded = true;
+      transitionElement.init();
+      activeClasses.push(transitionElement);
     });
+  };
 
-    // 오른쪽 마우스 drag 만 적용
-    // let startX;
-    // let endX;
+  // swiper
+  const $swiper = document.querySelector(".swiper");
+  const swiper = new Swiper($swiper, {
+    autoplay: {
+      delay: HOST.localhost === true ? 9999999 : 5000,
+    },
+    slidesPerView: 1,
+    // loop: true,
+    effect: "fade",
+    // allowTouchMove: false, // 마우스 drag 막기
+    keyboard: {
+      enabled: true, // 키보드 슬라이드 전환 활성화
+      onlyInViewport: true, // 뷰포트 내에서만 키보드 동작 활성화
+    },
+    on: {
+      init() {
+        // new TransitionElement
+        const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
+        transitionArticle($articles);
+      },
+      slideChangeTransitionStart: function () {
+        // class 백업 및 초기화
+        beforeClasses = activeClasses;
+        activeClasses = new Array();
 
-    // $swiper.addEventListener("mousedown", (e) => {
-    //   startX = e.clientX;
-    // });
+        // new TransitionElement
+        const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");
+        transitionArticle($articles);
+      },
+      slideChangeTransitionEnd: function () {
+        // class 내부 setTimeout 초기화
+        beforeClasses.forEach((_slide) => {
+          clearTimeout(_slide.timer1);
+          clearTimeout(_slide.timer2);
+        });
 
-    // $swiper.addEventListener("mouseup", (e) => {
-    //   endX = e.clientX;
-    //   triggerRightArrow(startX, endX);
-    // });
+        // 숨겨진 slide의 article 요소 classList 초기화
+        const disableIdx = Array.from(this.slides).findIndex((_slide) => !_slide.classList.contains("swiper-slide-active"));
+        const $articles = this.slides[disableIdx].querySelectorAll(".l-article--bg-gradient");
 
-    // function triggerRightArrow(startX, endX) {
-    //   const dragThreshold = 50; // Change this value to adjust the required drag distance
-    //   if (endX - startX < dragThreshold) {
-    //     swiper.slideNext();
-    //   }
-    // }
+        $articles.forEach((_$article) => {
+          _$article.classList.remove("is-start");
+          _$article.classList.remove("is-complete");
+          _$article.classList.add("is-ready");
+        });
+      },
+    },
+  });
 
-    // // MutationObserver 생성
-    // const observer = new MutationObserver(() => {
-    //   // Swiper를 재실행할 코드 작성
-    //   swiper.update(); // Swiper를 업데이트하여 재실행
-    //   console.log("swiper update");
-    // });
+  // 오른쪽 마우스 drag 만 적용
+  // let startX;
+  // let endX;
 
-    // // Observer 옵션 설정
-    // const observerOptions = {
-    //   childList: true, // 하위 요소의 추가/삭제를 감지
-    //   subtree: true, // 하위 요소의 모든 변화를 감지
-    // };
+  // $swiper.addEventListener("mousedown", (e) => {
+  //   startX = e.clientX;
+  // });
 
-    // // Observer 시작
-    // observer.observe($swiper, observerOptions);
-  }, 1500);
+  // $swiper.addEventListener("mouseup", (e) => {
+  //   endX = e.clientX;
+  //   triggerRightArrow(startX, endX);
+  // });
+
+  // function triggerRightArrow(startX, endX) {
+  //   const dragThreshold = 50; // Change this value to adjust the required drag distance
+  //   if (endX - startX < dragThreshold) {
+  //     swiper.slideNext();
+  //   }
+  // }
+
+  // // MutationObserver 생성
+  // const observer = new MutationObserver(() => {
+  //   // Swiper를 재실행할 코드 작성
+  //   swiper.update(); // Swiper를 업데이트하여 재실행
+  //   console.log("swiper update");
+  // });
+
+  // // Observer 옵션 설정
+  // const observerOptions = {
+  //   childList: true, // 하위 요소의 추가/삭제를 감지
+  //   subtree: true, // 하위 요소의 모든 변화를 감지
+  // };
+
+  // // Observer 시작
+  // observer.observe($swiper, observerOptions);
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
