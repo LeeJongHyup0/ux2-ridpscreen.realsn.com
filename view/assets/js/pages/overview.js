@@ -172,11 +172,11 @@
 
   // 값(변수) 변경될 때마다 콜백 메소드 호출
   dataWatcher.callback(() => {
-    $bars.forEach((_$bar, _idx) => {
-      setTimeout(() => {
-        animateTargetNumber(_$bar, _idx, dataWatcher.data[_idx]);
-      }, animationDuration + 500); // animationDuration + 500ms 뒤에 애니메이션 실행
-    });
+    // $bars.forEach((_$bar, _idx) => {
+    //   setTimeout(() => {
+    //     animateTargetNumber(_$bar, _idx, dataWatcher.data[_idx]);
+    //   }, animationDuration + 500); // animationDuration + 500ms 뒤에 애니메이션 실행
+    // });
 
     $bars.forEach((_$bar, _idx) => {
       const ObserverClassIsStart = new window.ObserverClass($article, "is-start");
@@ -186,6 +186,7 @@
       observerClassIsComplete.removeCallback(() => {
         _$bar.style.width = 0;
         _$bar.style.transform = "none";
+        $cnts[_idx].innerText = 0;
       });
     });
   });
@@ -200,6 +201,7 @@
   const $article = document.querySelector(".swiper-slide-overview1 [data-article=Top100연관어]");
   const $chart = $article.querySelector(".js-chart");
   const observerClassIsStart = new window.ObserverClass($article, "is-start");
+  const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
 
   // AMchart
   am5.ready(function () {
@@ -256,6 +258,10 @@
         { name: "최적화", labelSettings: { fill: am5.color(0xea704a) }, value: 111, fluc: 38.7 },
         { name: "원자력 발전", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
       ]);
+    });
+
+    observerClassIsComplete.removeCallback(() => {
+      series.data.setAll([]);
     });
   });
 }
@@ -421,7 +427,6 @@
   };
 
   observerClassIsStart.addCallback(() => didpLineNcolumnChart.reDataBinding(data));
-  observerClassIsComplete.removeCallback(() => didpLineNcolumnChart.timers.forEach((_timer) => clearTimeout(_timer)));
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -443,7 +448,7 @@
     _$articles.forEach((_$article, _idx) => {
       const transitionElement = new window.TransitionElement(_$article);
 
-      transitionElement.isStartDelay = _idx * 200; // fadeIn 시간차 적용
+      transitionElement.isStartDelay = _idx * 300; // 각 article의 시간차 transition 활성화
       transitionElement.isEventListenerAdded = true;
       transitionElement.init();
       activeClasses.push(transitionElement);
@@ -454,11 +459,21 @@
   const $swiper = document.querySelector(".swiper");
   const swiper = new Swiper($swiper, {
     autoplay: {
-      delay: HOST.localhost === true ? 9999999 : 5000,
+      delay: HOST.localhost === true ? 30000 : 7000,
     },
     slidesPerView: 1,
     // loop: true,
-    effect: "fade",
+    effect: "creative",
+    creativeEffect: {
+      prev: {
+        translate: ["100%", 0, 0],
+      },
+      next: {
+        translate: ["100%", 0, 0],
+      },
+    },
+    speed: 600,
+    ease: "cubic-bezier(0.5, 0, 0.5, 1)",
     // allowTouchMove: false, // 마우스 drag 막기
     keyboard: {
       enabled: true, // 키보드 슬라이드 전환 활성화
