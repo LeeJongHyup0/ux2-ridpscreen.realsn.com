@@ -33,7 +33,7 @@
    *  Note  : 해당 script는 무조건 마지막에 실행되어야 합니다.
    *
    */
-  window.addEventListener("load", () => {
+  function onWindowLoad() {
     let activeClasses = new Array();
     let beforeClasses = new Array();
 
@@ -136,7 +136,13 @@
         },
       },
     });
-  });
+  }
+
+  if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
+    setTimeout(onWindowLoad, 1); // 페이지가 이미 로드되었거나 대화형 상태인 경우
+  } else {
+    window.addEventListener("load", onWindowLoad); // 페이지가 아직 로드되지 않은 경우
+  }
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
