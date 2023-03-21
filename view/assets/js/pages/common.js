@@ -52,79 +52,6 @@ import $ from "jquery";
 {
   /**
    *
-   * <thaad>를 table 최 상단에 고정하기
-   *
-   */
-
-  if (Boolean(document.querySelectorAll("[data-thead-sticky=true]").length)) {
-    const sticky = new window.TableSticky(document.querySelectorAll("[data-thead-sticky=true]"));
-
-    window.onLoadResize({
-      callback() {
-        sticky.init();
-      },
-    });
-
-    const headerPin = document.querySelectorAll(".js-header-pin");
-    headerPin.forEach(function (_each) {
-      console.log(_each);
-      _each.addEventListener("click", function () {
-        setTimeout(function () {
-          sticky.init();
-        }, 1);
-      });
-    });
-  }
-}
-/*
-■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-*/
-{
-  /**
-   *
-   * GNB - active
-   *
-   */
-
-  const $header = document.querySelector("#header");
-
-  if ($header) {
-    const $links = $header.querySelectorAll("#header [data-file-path]");
-    const paths = Array.from($links).map((_$link) => _$link.getAttribute("data-file-path"));
-    const url = location.pathname.getBetween("view/", "/");
-    const hasPath = paths.find((_path) => _path === url);
-
-    if (hasPath) $header.querySelector(`[data-file-path="${hasPath}"]`).classList.add("header-gnb__link--is-active");
-  }
-}
-/*
-■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-*/
-{
-  /**
-   *
-   * GNB - link up
-   *
-   */
-
-  const $header = document.querySelector("#header");
-
-  if ($header) {
-    const $links = $header.querySelectorAll("#header [data-file-path]");
-
-    Array.from($links).forEach((_$link) => {
-      const href = _$link.getAttribute("data-file-path");
-
-      _$link.setAttribute("href", `../${href}`);
-    });
-  }
-}
-/*
-■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-*/
-{
-  /**
-   *
    * #header 숨기기 (custom data attributes)
    *
    */
@@ -173,8 +100,6 @@ import $ from "jquery";
         Array.from($lodings).forEach((_$loding) => {
           _$loding.setAttribute("data-loading-spinner", "true");
         });
-        // const $updateBtn = document.querySelector("[data-loading-update]");
-        // $updateBtn.setAttribute("data-loading-update", "true");
         break;
       //  데이터 없는 경우
       case "empty":
@@ -214,56 +139,6 @@ $(function () {
      */
 
     $("#wrap").wait(100).attr({ "data-target-device": $.getDevice().type, "data-device-detail": $.getDevice().detail });
-  }
-  /*
-  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  */
-  {
-    /**
-     *
-     *.js-is-appear에 FadeIn 적용 ▼
-     *
-     *  [html 작성 예]
-     *      //기본값 적용시
-     *      <div class="js-is-appear">
-     *
-     *      //scroll.top 사용자값 입력시(예: class 뒤에 숫자 입력)
-     *      <div class="js-is-appear50">
-     *
-     *  [CSS 작성 예]
-     *      div {opacity:0;transition:none}
-     *      div.appear {opacity:1;transition:opacity 0.3s ease-in-out}
-     *
-     */
-
-    const $appears = document.querySelectorAll("[class*=js-is-appear]");
-
-    $appears.forEach((_each) => {
-      const $this = _each;
-      const classNames = $this.getAttribute("class").split(" ");
-      const posY = classNames
-        .map((_arr) => {
-          if (_arr.indexOf("js-is-appear") !== -1) {
-            let num = Number(_arr.replace(/[^0-9]/g, ""));
-
-            $this.classList.remove(_arr); //removeClass
-            return (num = num !== 0 ? num : 70); //scroll.top 기본값 70 설정함
-          }
-        })
-        .filter((_el) => _el)[0];
-
-      // addClass('js-is-appear')
-      $.scrollAction({
-        $target: $this,
-        top: posY,
-        scrollDownAction: function () {
-          $this.classList.add("is-appear");
-        },
-        scrollUpAction: function () {
-          $this.classList.remove("is-appear");
-        },
-      });
-    });
   }
   /*
   ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
