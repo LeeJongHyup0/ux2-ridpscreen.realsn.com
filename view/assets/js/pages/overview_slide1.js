@@ -27,6 +27,7 @@
 
   // 값(변수) 변경될 때마다 콜백 메소드 호출
   dataWatcher.callback(() => {
+    animateTargetNumber(dataWatcher.data);
     observerClassIsStart.addCallback(() => animateTargetNumber(dataWatcher.data));
     observerClassIsComplete.removeCallback(() => ($number.innerHTML = 0));
   });
