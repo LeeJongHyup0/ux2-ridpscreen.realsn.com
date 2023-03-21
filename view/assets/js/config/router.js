@@ -1,11 +1,11 @@
 /* JS loader */
 let routes = [
   {
-    path: "/view/regional/",
+    path: "/regional/",
     script: [`${SERVER.assets}/js/pages/regional.js`],
   },
   {
-    path: "/view/overview/",
+    path: "/overview/",
     script: [`${SERVER.assets}/js/pages/overview.js`, `${SERVER.assets}/js/pages/overview_slide1.js`, `${SERVER.assets}/js/pages/overview_slide2.js`],
   },
 ];
