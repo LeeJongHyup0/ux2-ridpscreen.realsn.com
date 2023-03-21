@@ -106,7 +106,7 @@
           updateSwiperParams(this.activeIndex);
         },
         slideChangeTransitionStart: function () {
-          console.log(this.activeIndex);
+          // console.log(this.activeIndex);
         },
         slideChangeTransitionEnd: function () {
           // class(= transitionElement) 내부 setTimeout 초기화
