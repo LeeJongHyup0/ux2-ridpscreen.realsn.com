@@ -42,7 +42,7 @@
       _$articles.forEach((_$article, _idx) => {
         const transitionElement = new window.TransitionElement(_$article);
 
-        transitionElement.isStartDelay = _idx * 400; // 각 article의 시간차 transition 활성화
+        transitionElement.isStartDelay = _idx * 150; // 각 article의 시간차 transition 활성화
         transitionElement.isEventListenerAdded = true;
         transitionElement.init();
         activeClasses.push(transitionElement);
@@ -109,15 +109,15 @@
           // console.log(this.activeIndex);
         },
         slideChangeTransitionEnd: function () {
+          // class 백업 및 초기화
+          beforeClasses = activeClasses;
+          activeClasses = new Array();
+
           // class(= transitionElement) 내부 setTimeout 초기화
           beforeClasses.forEach((_slide) => {
             clearTimeout(_slide.timer1);
             clearTimeout(_slide.timer2);
           });
-
-          // class 백업 및 초기화
-          beforeClasses = activeClasses;
-          activeClasses = new Array();
 
           // new TransitionElement
           const $articles = this.slides[this.activeIndex].querySelectorAll(".l-article--bg-gradient");

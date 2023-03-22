@@ -158,41 +158,6 @@
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 */
 {
-  const $article = document.querySelector(".swiper-slide-overview2 [data-article=TPOP]");
-  const $cnts = $article.querySelectorAll(`.l-article-header .cnt`);
-  const observerAddClass = new window.ObserverClass($article, "is-start");
-  const observerRemoveClass = new window.ObserverClass($article, "is-complete");
-  const dataWatcher = new window.DataWatcher();
-
-  // 값(변수) 변경될 때마다 콜백 메소드 호출
-  dataWatcher.callback(() => {
-    observerAddClass.addCallback(() => {
-      dataWatcher.data.forEach((_data, _idx) => {
-        $cnts[_idx].innerText = _data;
-
-        $($cnts[_idx]).stop().animateNumber({
-          addComma: false,
-          totalPlayTime: 1000,
-          endNumber: _data,
-          endValue: _data,
-        });
-      });
-    });
-
-    observerRemoveClass.removeCallback(() => {
-      dataWatcher.data.forEach((_data, _idx) => {
-        $cnts[_idx].innerText = "0";
-      });
-    });
-  });
-
-  // 초기값
-  dataWatcher.data = [99.9, 64.4, 25, 25];
-}
-/*
-■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-*/
-{
   const $article = document.querySelector(".swiper-slide-overview2 [data-article=정보량추이]");
   const $chart = $article.querySelector(".js-chart");
   const $categoryLabels = $article.querySelectorAll(".chart-category .cnt");
@@ -200,25 +165,25 @@
   const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
 
   let data = [
-    { category: "1/1", snps: 25, pareto: 10 },
-    { category: "1/2", snps: 25, pareto: 10 },
-    { category: "1/3", snps: 25, pareto: 30 },
+    { category: "1/1", snps: 55, pareto: 10 },
+    { category: "1/2", snps: 45, pareto: 10 },
+    { category: "1/3", snps: 35, pareto: 30 },
     { category: "1/4", snps: 25, pareto: 40 },
-    { category: "1/5", snps: 25, pareto: 20 },
-    { category: "1/6", snps: 25, pareto: 40 },
-    { category: "1/7", snps: 25, pareto: 60 },
-    { category: "1/8", snps: 25, pareto: 10 },
-    { category: "1/9", snps: 25, pareto: 15 },
+    { category: "1/5", snps: 15, pareto: 20 },
+    { category: "1/6", snps: -25, pareto: 40 },
+    { category: "1/7", snps: -35, pareto: 60 },
+    { category: "1/8", snps: -45, pareto: 10 },
+    { category: "1/9", snps: -55, pareto: 15 },
     { category: "1/10", snps: 12, pareto: 7 },
-    { category: "1/11", snps: 9, pareto: 12 },
+    { category: "1/11", snps: -9, pareto: 12 },
     { category: "1/12", snps: 22, pareto: 12 },
     { category: "1/13", snps: 94, pareto: 42 },
     { category: "1/14", snps: 94, pareto: 62 },
     { category: "1/15", snps: -88, pareto: 52 },
-    { category: "1/16", snps: 65, pareto: 2 },
+    { category: "1/16", snps: -65, pareto: 2 },
     { category: "1/17", snps: 93, pareto: 12 },
     { category: "1/18", snps: 41, pareto: 22 },
-    { category: "1/19", snps: -41, pareto: 12 },
+    { category: "1/19", snps: 41, pareto: 12 },
     { category: "1/20", snps: 41, pareto: 12 },
     { category: "1/21", snps: 41, pareto: 14 },
     { category: "1/22", snps: 41, pareto: 12 },
@@ -231,6 +196,38 @@
     { category: "1/29", snps: 41, pareto: 12 },
     { category: "1/30", snps: 41, pareto: 12 },
   ];
+  let data2 = [
+    { category: "4/1", snps: 25, pareto: 10 },
+    { category: "4/2", snps: 25, pareto: 10 },
+    { category: "4/3", snps: 25, pareto: 30 },
+    { category: "4/4", snps: 25, pareto: 40 },
+    { category: "4/5", snps: 25, pareto: 20 },
+    { category: "4/6", snps: 25, pareto: 40 },
+    { category: "4/7", snps: 25, pareto: 60 },
+    { category: "4/8", snps: 25, pareto: 10 },
+    { category: "4/9", snps: 25, pareto: 15 },
+    { category: "4/10", snps: 12, pareto: 7 },
+    { category: "4/11", snps: 9, pareto: 12 },
+    { category: "4/12", snps: 22, pareto: 12 },
+    { category: "4/13", snps: 94, pareto: 42 },
+    { category: "4/14", snps: 94, pareto: 62 },
+    { category: "4/15", snps: -88, pareto: 52 },
+    { category: "4/16", snps: 65, pareto: 2 },
+    { category: "4/17", snps: 93, pareto: 12 },
+    { category: "4/18", snps: 41, pareto: 22 },
+    { category: "4/19", snps: -41, pareto: 12 },
+    { category: "4/20", snps: 41, pareto: 12 },
+    { category: "4/21", snps: 41, pareto: 14 },
+    { category: "4/22", snps: 41, pareto: 12 },
+    { category: "4/23", snps: -11, pareto: 12 },
+    { category: "4/24", snps: -21, pareto: 22 },
+    { category: "4/25", snps: -31, pareto: 42 },
+    { category: "4/26", snps: -41, pareto: 12 },
+    { category: "4/27", snps: -51, pareto: 12 },
+    { category: "4/28", snps: -41, pareto: 12 },
+    { category: "4/29", snps: -31, pareto: 12 },
+    { category: "4/30", snps: -21, pareto: 12 },
+  ];
 
   const didpLineNcolumnChart = new rsnCharts.DidpLineNcolumnChart($chart);
 
@@ -239,20 +236,30 @@
     play: true, // Boolean / 기본값 - Booleantrue
     duration: 150, // Number /  기본값 sec - 600
   });
-  let division = data.length / Array.from($categoryLabels).length;
-  Array.from($categoryLabels).forEach(function (_$label, _idx) {
-    _$label.innerText = data[_idx * division].category;
-  });
-  Array.from($categoryLabels)[Array.from($categoryLabels).length - 1].innerText = data[data.length - 1].category;
 
-  // setTimeout(() => {
-  //   clearTimeout(didpLineNcolumnChart.timer);
-  //   didpLineNcolumnChart.reDataBinding(data);
-  //   didpLineNcolumnChart.lineAnimate({
-  //     play: true, // Boolean / 기본값 - Booleantrue
-  //     duration: 600, // Number /  기본값 sec - 600
-  //   });
-  // }, 3000);
+  (categoryDivision = function (_data) {
+    let division = _data.length / Array.from($categoryLabels).length;
+    Array.from($categoryLabels).forEach((_$label, _idx) => (_$label.innerText = _data[_idx * division].category));
+    Array.from($categoryLabels)[Array.from($categoryLabels).length - 1].innerText = _data[_data.length - 1].category;
+  })(data);
+
+  observerClassIsStart.addCallback(() => {
+    didpLineNcolumnChart.chart.hide();
+    didpLineNcolumnChart.reDataBinding(data2);
+    didpLineNcolumnChart.lineAnimate({
+      beforeStop: true, // 이전 차트 그리기 취소 - 재실행시 꼭!!! 들어가야함
+      play: true, // Boolean / 기본값 - Booleantrue
+      duration: 150, // Number /  기본값 sec - 600
+    });
+    let division = data2.length / Array.from($categoryLabels).length;
+    Array.from($categoryLabels).forEach(function (_$label, _idx) {
+      _$label.innerText = data2[_idx * division].category;
+    });
+  });
+
+  observerClassIsComplete.removeCallback(() => {
+    didpLineNcolumnChart.chart.hide();
+  });
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■

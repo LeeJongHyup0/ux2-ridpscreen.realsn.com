@@ -6,7 +6,12 @@ let routes = [
   },
   {
     path: "/overview/",
-    script: [`${SERVER.assets}/js/pages/overview.js`, `${SERVER.assets}/js/pages/overview_slide1.js`, `${SERVER.assets}/js/pages/overview_slide2.js`],
+    script: [
+      `${SERVER.assets}/js/pages/overview.js`,
+      `${SERVER.assets}/js/pages/overview_slide1.js`,
+      `${SERVER.assets}/js/pages/overview_slide2.js`,
+      `${SERVER.assets}/js/pages/overview_sample.js`,
+    ],
   },
 ];
 const url = location.pathname;
