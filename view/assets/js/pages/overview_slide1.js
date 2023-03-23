@@ -19,7 +19,7 @@
       .stop()
       .animateNumber({
         addComma: true,
-        totalPlayTime: 600,
+        totalPlayTime: 800,
         endNumber: typeof _data === "number" ? _data : _data.replace(/[^0-9]/g, ""),
         endValue: _data,
       });
@@ -133,35 +133,62 @@
   let observerClassIsStarts = new Array();
   let observerClassIsCompletes = new Array();
 
-  // 애니메이션 효과를 적용
-  const animate = (_$bar, _idx, _data) => {
-    _$bar.style.width = `${_data}%`;
-    _$bar.style.transitionDelay = `${_idx * 0.15}s`;
-    $cnts[_idx].innerText = _data;
-  };
+  // transition 설정
+  function setTransition(_data, _idx) {
+    _idx === 0 && ($tit.innerText = _data.name);
+    $bullets[_idx].innerHTML = `<img class="c-bullet__img" src="/view/assets/img/icon/channel/channel-${_data.icon}.png" alt="${_data.name}">`;
+    $bullets[_idx].style.backgroundColor = _data.color;
+    $cnts[_idx].innerText = _data.value;
+    $bars[_idx].style.width = `${_data.value}%`;
+    $bars[_idx].style.backgroundColor = _data.color;
+    $bars[_idx].style.transitionDelay = `${_idx * 0.15}s`;
+  }
+
+  // transition 초기화
+  function resetTransition(_data, _idx) {
+    $bullets[_idx].innerHTML = "";
+    $bullets[_idx].style.backgroundColor = "";
+    $cnts[_idx].innerText = 0;
+    $bars[_idx].style.width = "";
+    $bars[_idx].style.backgroundColor = "";
+  }
+
+  // observerClass 설정
+  function updateState(_data, _idx) {
+    observerClassIsStarts[_idx] = new window.ObserverClass($article, "is-start");
+    observerClassIsStarts[_idx].addCallback(() => setTransition(_data, _idx));
+
+    observerClassIsCompletes[_idx] = new window.ObserverClass($article, "is-complete");
+    observerClassIsCompletes[_idx].removeCallback(() => resetTransition(_data, _idx));
+  }
+
+  // observerClass 초기화
+  function disconnect() {
+    observerClassIsStarts.forEach((_class) => _class.disconnect());
+    observerClassIsCompletes.forEach((_class) => _class.disconnect());
+    observerClassIsStarts = [];
+    observerClassIsCompletes = [];
+  }
 
   // 값(변수) 변경될 때마다 콜백 메소드 호출
   dataWatcher.callback(() => {
     const datas = dataWatcher.data.sort((_a, _b) => _b.value - _a.value);
 
-    datas.forEach((_data, _idx) => {
-      _idx === 0 && ($tit.innerText = _data.name);
-      $bullets[_idx].innerHTML = `<img class="c-bullet__img" src="/view/assets/img/icon/channel/channel-${_data.icon}.png" alt="${_data.name}">`;
-      $bullets[_idx].style.backgroundColor = _data.color;
-      $bars[_idx].style.backgroundColor = _data.color;
-      $cnts[_idx].innerText = _data.value;
-      $bars[_idx].style.transitionDelay = `${_idx * 0.15}s`;
+    // observerClass 초기화
+    if (observerClassIsStarts.length !== 0 || observerClassIsCompletes.length !== 0) disconnect();
 
-      const ObserverClassIsStart = new window.ObserverClass($article, "is-start");
-      ObserverClassIsStart.addCallback(() => {
-        $bars[_idx].style.width = `${_data.value}%`;
+    // 데이터 응답 속도/재호출에 따른 조건 처리
+    if ($article.hasClass("is-start") || $article.hasClass("is-complete")) {
+      datas.forEach((_data, _idx) => {
+        resetTransition(_data, _idx);
+        setTransition(_data, _idx);
+        updateState(_data, _idx);
       });
-
-      const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
-      observerClassIsComplete.removeCallback(() => {
-        $bars[_idx].style.width = "";
+    } else {
+      datas.forEach((_data, _idx) => {
+        updateState(_data, _idx);
       });
-    });
+    }
   });
 
   // 초기값
@@ -172,6 +199,19 @@
     { name: "트튀터", value: 33.54, icon: "twitter", color: "#5754E7" },
     { name: "정부/공공", value: 74.2, icon: "government", color: "#348E94" },
   ];
+
+  // 뉴스 : news / #B05BCE
+  // 커뮤니티 : community / #A5D148
+  // 블로그 : blog / #62A87E
+  // 카페 : cafe / #E46F1A
+  // 트위터 : twitter / #6BB3DC
+  // 인스타그램 : instagram / #B05BCE
+  // 유튜브 : youtube  / #C24343
+  // 페이스북 : facebook / #738EEC
+  // 카카오스토리 : kakaostory / #F2CF18
+  // 지식인 : kin / #348E94
+  // 기업&단체 : organization / #D772C1
+  // 정부&공공 : government / #5754E7
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -350,6 +390,14 @@
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 */
 {
+  /**
+   *
+   *  depth : 상황판 > 첫 번째 슬라이드
+   *  block : 연령별
+   *  event : new ObserverClass & new DataWatcher
+   *
+   */
+
   const $article = document.querySelector(`[data-article="인포그래픽모음"]`);
   const $ages = $article.querySelectorAll(`[data-article="연령별"] .age`);
   const $bars = $article.querySelectorAll(`[data-article="연령별"] .c-chart-bar__bar`);
@@ -417,51 +465,11 @@
 
   // 초기값;
   dataWatcher.data = [
-    { name: "10대", value: 99 },
+    { name: "10대", value: 19 },
     { name: "20대", value: 40 },
     { name: "30대", value: 44.1 },
     { name: "40대", value: 10.2 },
     { name: "50대", value: 100 },
-  ];
-}
-/*
-■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-*/
-{
-  /**
-   *
-   *  depth : 상황판 > 첫 번째 슬라이드
-   *  block : TOP 5 토픽
-   *  event : new ObserverClass & new DataWatcher  & new customCandleChart
-   *
-   */
-
-  const $article = document.querySelector(`[data-article="Top5 토픽"]`);
-  const $bar = $article.querySelector(`.js-chart`);
-  const customCandleChart = new rsnCharts.CustomCandleChart($bar);
-  const observerClassIsStart = new window.ObserverClass($article, "is-start");
-  const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
-  const dataWatcher = new window.DataWatcher();
-
-  // 값(변수) 변경될 때마다 콜백 메소드 호출
-  dataWatcher.callback(() => {
-    // 데이터 응답 속도/재호출에 따른 조건 처리
-    customCandleChart.dataBind(dataWatcher.data);
-    if ($article.hasClass("is-start") || $article.hasClass("is-complete")) {
-      observerClassIsStart.addCallback(() => customCandleChart.dataBind(dataWatcher.data));
-      observerClassIsComplete.removeCallback(() => customCandleChart.dataBind([]));
-    } else {
-      observerClassIsStart.addCallback(() => customCandleChart.dataBind(dataWatcher.data));
-      observerClassIsComplete.removeCallback(() => customCandleChart.dataBind([]));
-    }
-  });
-
-  dataWatcher.data = [
-    { name: "산업", value: 2402 },
-    { name: "IT/과학", value: 1600 },
-    { name: "경제", value: 857 },
-    { name: "환경", value: 243 },
-    { name: "기타", value: 57 },
   ];
 }
 /*
@@ -545,6 +553,23 @@
     { name: "연구원", percent: 95.4, icon: "researcher", color: "#6756AD" },
     { name: "사업가", percent: 45.3, icon: "businessman", color: "#6756AD" },
   ];
+
+  // 중고등학생 : student
+  // 대학원생 : graduate-student
+  // 무직 : none
+  // 군인 : army
+  // 주부 : housewife
+  // 사업가 : businessman
+  // 직장인 : office-worker
+  // 개발자 : developer
+  // 연구원 : researcher
+  // 전문직 : specialized
+  // 공무원 : civil-servant
+  // 방송예술직 : radioman
+  // 정치 : statesman
+  // 종교인 : religious
+  // 크리에이터 : creator
+  // 기타 : etc
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -626,6 +651,69 @@
     { name: "경제", percent: 34.5, icon: "economy", color: "#E5AF23" },
     { name: "환경", percent: 52.4, icon: "enviroment", color: "#E5AF23" },
     { name: "자동차", percent: 65.3, icon: "car", color: "#E5AF23" },
+  ];
+
+  // IT - it
+  // 건강의료 - medical
+  // 게임 - game
+  // 문화 - culture
+  // 반려동물 - animal
+  // 육아 - infant-care
+  // 패션 - fashion
+  // 뷰티 - beuty
+  // 사회문제 - social-issue
+  // 스포츠 - sports
+  // 음식 - food
+  // 여행 - trip
+  // 연예 - entertainment
+  // 인테리어 - interior
+  // 자동차 - car
+  // 정치-보수 - conservatism
+  // 정치-진보 - progressive
+  // 정치-알수없음 - politics
+  // 페미니즘 - feminism
+  // 환경 - enviroment
+  // 경제 - economy
+  // 교육 - edu
+}
+/*
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+*/
+{
+  /**
+   *
+   *  depth : 상황판 > 첫 번째 슬라이드
+   *  block : TOP 5 토픽
+   *  event : new ObserverClass & new DataWatcher  & new customCandleChart
+   *
+   */
+
+  const $article = document.querySelector(`[data-article="Top5 토픽"]`);
+  const $bar = $article.querySelector(`.js-chart`);
+  const customCandleChart = new rsnCharts.CustomCandleChart($bar);
+  const observerClassIsStart = new window.ObserverClass($article, "is-start");
+  const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
+  const dataWatcher = new window.DataWatcher();
+
+  // 값(변수) 변경될 때마다 콜백 메소드 호출
+  dataWatcher.callback(() => {
+    // 데이터 응답 속도/재호출에 따른 조건 처리
+    customCandleChart.dataBind(dataWatcher.data);
+    if ($article.hasClass("is-start") || $article.hasClass("is-complete")) {
+      observerClassIsStart.addCallback(() => customCandleChart.dataBind(dataWatcher.data));
+      observerClassIsComplete.removeCallback(() => customCandleChart.dataBind([]));
+    } else {
+      observerClassIsStart.addCallback(() => customCandleChart.dataBind(dataWatcher.data));
+      observerClassIsComplete.removeCallback(() => customCandleChart.dataBind([]));
+    }
+  });
+
+  dataWatcher.data = [
+    { name: "산업", value: 2402 },
+    { name: "IT/과학", value: 1600 },
+    { name: "경제", value: 857 },
+    { name: "환경", value: 243 },
+    { name: "기타", value: 57 },
   ];
 }
 /*

@@ -33,7 +33,8 @@
    *  Note  : 해당 script는 무조건 마지막에 실행되어야 합니다.
    *
    */
-  function onWindowLoad() {
+
+  window.initializeSwiper = function () {
     let activeClasses = new Array();
     let beforeClasses = new Array();
 
@@ -136,12 +137,24 @@
         },
       },
     });
-  }
+  };
+}
+/*
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+*/
+{
+  /**
+   *
+   *  depth : 상황판
+   *  event : Swiper 초기화
+   *  Note  : Swiper 로드 시점을 현재는 모든 리소스가 다운로드된 후 실행되도록 처리함
+   *
+   */
 
   if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
-    setTimeout(onWindowLoad, 1); // 페이지가 이미 로드되었거나 대화형 상태인 경우
+    setTimeout(() => window.initializeSwiper(), 1); // 페이지가 이미 로드되었거나 대화형 상태인 경우
   } else {
-    window.addEventListener("load", onWindowLoad); // 페이지가 아직 로드되지 않은 경우
+    window.addEventListener("load", window.initializeSwiper()); // 페이지가 아직 로드되지 않은 경우
   }
 }
 /*
