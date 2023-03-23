@@ -19,7 +19,7 @@
       .stop()
       .animateNumber({
         addComma: true,
-        totalPlayTime: 800,
+        totalPlayTime: 600,
         endNumber: typeof _data === "number" ? _data : _data.replace(/[^0-9]/g, ""),
         endValue: _data,
       });
