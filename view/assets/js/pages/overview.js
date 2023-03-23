@@ -76,7 +76,7 @@
     const $swiper = document.querySelector(".swiper");
     const swiper = new Swiper($swiper, {
       autoplay: {
-        delay: 8000,
+        delay: 10000,
         disableOnInteraction: false,
       },
       slidesPerView: 1,
