@@ -119,7 +119,7 @@
   /**
    *
    *  depth : 상황판 > 첫 번째 슬라이드
-   *  block : Top5
+   *  block : Top 5 채널
    *  event : new ObserverClass & new DataWatcher
    *
    */
@@ -146,7 +146,7 @@
 
     datas.forEach((_data, _idx) => {
       _idx === 0 && ($tit.innerText = _data.name);
-      $bullets[_idx].innerHTML = `<i class="icon-svg-channel-${_data.icon}"></i>`;
+      $bullets[_idx].innerHTML = `<img class="c-bullet__img" src="/view/assets/img/icon/channel/channel-${_data.icon}.png" alt="${_data.name}">`;
       $bullets[_idx].style.backgroundColor = _data.color;
       $bars[_idx].style.backgroundColor = _data.color;
       $cnts[_idx].innerText = _data.value;
@@ -417,8 +417,8 @@
 
   // 초기값;
   dataWatcher.data = [
-    { name: "11대", value: 99 },
-    { name: "21대", value: 40 },
+    { name: "10대", value: 99 },
+    { name: "20대", value: 40 },
     { name: "30대", value: 44.1 },
     { name: "40대", value: 10.2 },
     { name: "50대", value: 100 },
@@ -625,7 +625,7 @@
   dataWatcher.data = [
     { name: "경제", percent: 34.5, icon: "economy", color: "#E5AF23" },
     { name: "환경", percent: 52.4, icon: "enviroment", color: "#E5AF23" },
-    { name: "자동차", percent: 65.3, icon: "interest-car", color: "#E5AF23" },
+    { name: "자동차", percent: 65.3, icon: "car", color: "#E5AF23" },
   ];
 }
 /*
