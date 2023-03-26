@@ -1,0 +1,49 @@
+[
+  {
+    "category": "성별",
+    "itemList": [
+      {
+        "name": "남성",
+        "color": "#4C86DD"
+      },
+      {
+        "name": "여성",
+        "color": "#DC5A5A"
+      }
+    ]
+  },
+  {
+    "category": "데이터",
+    "itemList": [
+      { "name": "시스템", "value": 1100 },
+      { "name": "현재", "value": 536 },
+      { "name": "정보", "value": 368 },
+      { "name": "쉽다", "value": 363 },
+      { "name": "가격", "value": 358 },
+      { "name": "어렵다", "value": 312 },
+      { "name": "개발", "value": 271 },
+      { "name": "사용문의", "value": 255 },
+      { "name": "지역", "value": 235 },
+      { "name": "평가", "value": 267 },
+      { "name": "단품", "value": 1100 },
+      { "name": "높다", "value": 536 },
+      { "name": "인프라", "value": 333 },
+      { "name": "스마트하다", "value": 222 },
+      { "name": "설비", "value": 111 },
+      { "name": "에너지 절감", "value": 100 },
+      { "name": "차량", "value": 100 },
+      { "name": "솔루션", "value": 100 },
+      { "name": "미국", "value": 100 },
+      { "name": "효과적인", "value": 100 },
+      { "name": "통합", "value": 100 },
+      { "name": "낮다", "value": 235 },
+      { "name": "기타", "value": 267 },
+      { "name": "연비", "value": 1100 },
+      { "name": "태양광", "value": 536 },
+      { "name": "운영", "value": 333 },
+      { "name": "자연친화", "value": 222 },
+      { "name": "최적화", "value": 111 },
+      { "name": "원자력 발전", "value": 100 }
+    ]
+  }
+]

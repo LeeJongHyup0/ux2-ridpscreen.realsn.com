@@ -93,9 +93,20 @@
 
   const $article = document.querySelector(".swiper-slide-overview2 [data-article=성별]");
   const $chart = $article.querySelector(".js-chart");
+  const $label = $article.querySelector(".l-article-header__label");
   const observerClassIsStart = new window.ObserverClass($article, "is-start");
   const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
   const dataWatcher = new window.DataWatcher();
+
+  // transition 초기화
+  function resetTransition() {
+    $label.innerText = "";
+  }
+
+  // transition 설정
+  function setTransition(_data, _idx) {
+    $label.insertAdjacentHTML("beforeend", `<i class="c-badge ml-11" style="background: ${_data.color}">${_data.name}</i>`);
+  }
 
   // AMchart
   am5.ready(function () {
@@ -122,50 +133,55 @@
 
     // 값(변수) 변경될 때마다 콜백 메소드 호출
     dataWatcher.callback(() => {
+      // 성별 데이터
+      const gender = dataWatcher.data.find((e) => e.category === "성별").itemList;
+
+      // 데이터 필터
+      const filterData = dataWatcher.data.find((e) => e.category === "데이터").itemList.sort((_a, _b) => _b.value - _a.value);
+
+      filterData.forEach((_data, _idx) => {
+        if (_idx >= 0 && 5 > _idx) {
+          _data.labelSettings = { fill: am5.color(0x4c86dd) };
+        } else if (_idx >= 5 && 20 > _idx) {
+          _data.labelSettings = { fill: am5.color(0xffffff) };
+        } else if (_idx >= 20 && 30 > _idx) {
+          _data.labelSettings = { fill: am5.color(0x999999) };
+        } else {
+        }
+      });
+
       // 데이터 응답 속도/재호출에 따른 조건 처리
-      if ($article.hasClass("is-start") || $article.hasClass("is-complete")) {
-        series.data.setAll(dataWatcher.data);
-        observerClassIsStart.addCallback(() => series.data.setAll(dataWatcher.data));
+      if ($article.classList.contains("is-start") || $article.classList.contains("is-complete")) {
+        series.data.setAll(filterData);
+        observerClassIsStart.addCallback(() => series.data.setAll(filterData));
         observerClassIsComplete.removeCallback(() => series.data.setAll([]));
+
+        resetTransition();
+
+        gender.forEach((_data, _idx) => {
+          setTransition(_data, _idx);
+        });
       } else {
-        observerClassIsStart.addCallback(() => series.data.setAll(dataWatcher.data));
+        observerClassIsStart.addCallback(() => series.data.setAll(filterData));
         observerClassIsComplete.removeCallback(() => series.data.setAll([]));
+
+        resetTransition();
+
+        gender.forEach((_data, _idx) => {
+          setTransition(_data, _idx);
+        });
       }
     });
   });
 
   // 초기값;
-  dataWatcher.data = [
-    { name: "시스템", labelSettings: { fill: am5.color(0x4c86dd) }, value: 1100, fluc: 38.7 },
-    { name: "현재", labelSettings: { fill: am5.color(0x4c86dd) }, value: 536, fluc: 38.7 },
-    { name: "정보", labelSettings: { fill: am5.color(0x4c86dd) }, value: 368, fluc: 38 },
-    { name: "쉽다", labelSettings: { fill: am5.color(0x4c86dd) }, value: 363, fluc: 38 },
-    { name: "가격", labelSettings: { fill: am5.color(0x4c86dd) }, value: 358, fluc: 38.7 },
-    { name: "어렵다", labelSettings: { fill: am5.color(0x4c86dd) }, value: 312, fluc: 38.7 },
-    { name: "개발", labelSettings: { fill: am5.color(0x4c86dd) }, value: 271, fluc: 38.7 },
-    { name: "사용문의", labelSettings: { fill: am5.color(0xffffff) }, value: 255, fluc: 38.7 },
-    { name: "지역", labelSettings: { fill: am5.color(0xffffff) }, value: 235, fluc: -40.1 },
-    { name: "평가", labelSettings: { fill: am5.color(0xffffff) }, value: 267, fluc: -40.1 },
-    { name: "단품", labelSettings: { fill: am5.color(0xffffff) }, value: 1100, fluc: 38.7 },
-    { name: "높다", labelSettings: { fill: am5.color(0xffffff) }, value: 536, fluc: 38.7 },
-    { name: "인프라", labelSettings: { fill: am5.color(0x666666) }, value: 333, fluc: 38.7 },
-    { name: "스마트하다", labelSettings: { fill: am5.color(0x666666) }, value: 222, fluc: 38.7 },
-    { name: "설비", labelSettings: { fill: am5.color(0x666666) }, value: 111, fluc: 38.7 },
-    { name: "에너지 절감", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "차량", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "솔루션", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "미국", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "효과적인", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "통합", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "낮다", labelSettings: { fill: am5.color(0xffffff) }, value: 235, fluc: -40.1 },
-    { name: "기타", labelSettings: { fill: am5.color(0x4c86dd) }, value: 267, fluc: -40.1 },
-    { name: "연비", labelSettings: { fill: am5.color(0xffffff) }, value: 1100, fluc: 38.7 },
-    { name: "태양광", labelSettings: { fill: am5.color(0xffffff) }, value: 536, fluc: 38.7 },
-    { name: "운영", labelSettings: { fill: am5.color(0x666666) }, value: 333, fluc: 38.7 },
-    { name: "자연친화", labelSettings: { fill: am5.color(0x666666) }, value: 222, fluc: 38.7 },
-    { name: "최적화", labelSettings: { fill: am5.color(0x4c86dd) }, value: 111, fluc: 38.7 },
-    { name: "원자력 발전", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-  ];
+  fetch(`${SERVER.assets}/json/slide2_wordcloud-gender-data.json`)
+    .then((_response) => {
+      return _response.json();
+    })
+    .then((_jsondata) => {
+      dataWatcher.data = _jsondata;
+    });
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -181,9 +197,20 @@
 
   const $article = document.querySelector(".swiper-slide-overview2 [data-article=연령별]");
   const $chart = $article.querySelector(".js-chart");
+  const $label = $article.querySelector(".l-article-header__label");
   const observerClassIsStart = new window.ObserverClass($article, "is-start");
   const observerClassIsComplete = new window.ObserverClass($article, "is-complete");
   const dataWatcher = new window.DataWatcher();
+
+  // transition 초기화
+  function resetTransition() {
+    $label.innerText = "";
+  }
+
+  // transition 설정
+  function setTransition(_data, _idx) {
+    $label.insertAdjacentHTML("beforeend", `<i class="c-badge ml-11" style="background: ${_data.color}">${_data.name}</i>`);
+  }
 
   // AMchart
   am5.ready(function () {
@@ -208,74 +235,208 @@
       templateField: "labelSettings",
     });
 
+    function labelInput() {}
+
     // 값(변수) 변경될 때마다 콜백 메소드 호출
     dataWatcher.callback(() => {
+      // 연령별 데이터
+      const age = dataWatcher.data.find((e) => e.category === "연령별").itemList;
+
+      // 데이터 필터
+      const filterData = dataWatcher.data.find((e) => e.category === "데이터").itemList.sort((_a, _b) => _b.value - _a.value);
+
+      filterData.forEach((_data, _idx) => {
+        if (_idx >= 0 && 5 > _idx) {
+          _data.labelSettings = { fill: am5.color(0x58cba2) };
+        } else if (_idx >= 5 && 20 > _idx) {
+          _data.labelSettings = { fill: am5.color(0xffffff) };
+        } else {
+          _data.labelSettings = { fill: am5.color(0x999999) };
+        }
+      });
+
       // 데이터 응답 속도/재호출에 따른 조건 처리
       if ($article.hasClass("is-start") || $article.hasClass("is-complete")) {
-        series.data.setAll(dataWatcher.data);
-        observerClassIsStart.addCallback(() => series.data.setAll(dataWatcher.data));
+        series.data.setAll(filterData);
+        observerClassIsStart.addCallback(() => series.data.setAll(filterData));
         observerClassIsComplete.removeCallback(() => series.data.setAll([]));
+
+        resetTransition();
+
+        age.forEach((_data, _idx) => {
+          setTransition(_data, _idx);
+        });
       } else {
-        observerClassIsStart.addCallback(() => series.data.setAll(dataWatcher.data));
+        observerClassIsStart.addCallback(() => series.data.setAll(filterData));
         observerClassIsComplete.removeCallback(() => series.data.setAll([]));
+
+        resetTransition();
+
+        age.forEach((_data, _idx) => {
+          setTransition(_data, _idx);
+        });
       }
     });
   });
 
   // 초기값;
-  dataWatcher.data = [
-    { name: "시스템", labelSettings: { fill: am5.color(0x58cba2) }, value: 1100, fluc: 38.7 },
-    { name: "현재", labelSettings: { fill: am5.color(0x58cba2) }, value: 536, fluc: 38.7 },
-    { name: "정보", labelSettings: { fill: am5.color(0x58cba2) }, value: 368, fluc: 38 },
-    { name: "쉽다", labelSettings: { fill: am5.color(0x58cba2) }, value: 363, fluc: 38 },
-    { name: "가격", labelSettings: { fill: am5.color(0x58cba2) }, value: 358, fluc: 38.7 },
-    { name: "어렵다", labelSettings: { fill: am5.color(0x58cba2) }, value: 312, fluc: 38.7 },
-    { name: "개발", labelSettings: { fill: am5.color(0x58cba2) }, value: 271, fluc: 38.7 },
-    { name: "사용문의", labelSettings: { fill: am5.color(0xffffff) }, value: 255, fluc: 38.7 },
-    { name: "지역", labelSettings: { fill: am5.color(0xffffff) }, value: 235, fluc: -40.1 },
-    { name: "평가", labelSettings: { fill: am5.color(0xffffff) }, value: 267, fluc: -40.1 },
-    { name: "단품", labelSettings: { fill: am5.color(0xffffff) }, value: 1100, fluc: 38.7 },
-    { name: "높다", labelSettings: { fill: am5.color(0xffffff) }, value: 536, fluc: 38.7 },
-    { name: "인프라", labelSettings: { fill: am5.color(0x666666) }, value: 333, fluc: 38.7 },
-    { name: "스마트하다", labelSettings: { fill: am5.color(0x666666) }, value: 222, fluc: 38.7 },
-    { name: "설비", labelSettings: { fill: am5.color(0x666666) }, value: 111, fluc: 38.7 },
-    { name: "에너지 절감", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "차량", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "솔루션", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "미국", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "효과적인", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "통합", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-    { name: "낮다", labelSettings: { fill: am5.color(0xffffff) }, value: 235, fluc: -40.1 },
-    { name: "기타", labelSettings: { fill: am5.color(0x58cba2) }, value: 267, fluc: -40.1 },
-    { name: "연비", labelSettings: { fill: am5.color(0xffffff) }, value: 1100, fluc: 38.7 },
-    { name: "태양광", labelSettings: { fill: am5.color(0xffffff) }, value: 536, fluc: 38.7 },
-    { name: "운영", labelSettings: { fill: am5.color(0x666666) }, value: 333, fluc: 38.7 },
-    { name: "자연친화", labelSettings: { fill: am5.color(0x666666) }, value: 222, fluc: 38.7 },
-    { name: "최적화", labelSettings: { fill: am5.color(0x58cba2) }, value: 111, fluc: 38.7 },
-    { name: "원자력 발전", labelSettings: { fill: am5.color(0x666666) }, value: 100, fluc: 38.7 },
-  ];
+  fetch(`${SERVER.assets}/json/slide2_wordcloud-age-data.json`)
+    .then((_response) => {
+      return _response.json();
+    })
+    .then((_jsondata) => {
+      dataWatcher.data = _jsondata;
+    });
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 */
 {
+  /**
+   *
+   *  depth : 상황판 > 두 번째 슬라이드
+   *  block : TPOP
+   *  event : new ObserverClass & new DataWatcher
+   *
+   */
+
   const $article = document.querySelector(".swiper-slide-overview2 [data-article=TPOP]");
   const $chart = $article.querySelector(".js-chart");
+  const $tit = $article.querySelectorAll(".rank-header__tit");
+  const $titValue = $article.querySelectorAll(".rank-header__cnt");
+  const $rankItem = $article.querySelectorAll(".rank-list");
   const didpTpopChart = new rsnCharts.DidpTpopChart($chart);
-  let data = [
-    { category: "Time", value: 45 },
-    { category: "Place", value: 26 },
-    { category: "Occasion", value: 32 },
-    { category: "Person", value: 91 },
-  ];
-  let data2 = [
-    { category: "Time", value: 55 },
-    { category: "Place", value: 66 },
-    { category: "Occasion", value: 72 },
-    { category: "Person", value: 11 },
+  const dataWatcher = new window.DataWatcher();
+
+  function setTransition(_data, _idx) {
+    $tit[_idx].innerText = _data.category;
+    $titValue[_idx].innerText = `${_data.value}%`;
+  }
+
+  // 값(변수) 변경될 때마다 콜백 메소드 호출
+  dataWatcher.callback(() => {
+    const datas = dataWatcher.data;
+
+    datas.forEach((_data, _idx) => {
+      setTransition(_data, _idx);
+
+      const itemList = _data.itemList.sort((_a, _b) => _b.value - _a.value);
+
+      console.log(itemList);
+
+      itemList.forEach((_this, _itemIdx) => {});
+    });
+  });
+
+  // 초기값;
+  dataWatcher.data = [
+    {
+      category: "Time",
+      value: 45.2,
+      itemList: [
+        {
+          name: "지난해",
+          value: 45,
+        },
+        {
+          name: "실시간",
+          value: 32,
+        },
+        {
+          name: "1월",
+          value: 23,
+        },
+        {
+          name: "2월",
+          value: 13,
+        },
+        {
+          name: "오후",
+          value: 5,
+        },
+      ],
+    },
+    {
+      category: "Occasion",
+      value: 32.6,
+      itemList: [
+        {
+          name: "사업",
+          value: 23,
+        },
+        {
+          name: "서비스",
+          value: 43,
+        },
+        {
+          name: "응원",
+          value: 52,
+        },
+        {
+          name: "투자",
+          value: 12,
+        },
+        {
+          name: "합의",
+          value: 65,
+        },
+      ],
+    },
+    {
+      category: "Place",
+      value: 5.3,
+      itemList: [
+        {
+          name: "전기차",
+          value: 23,
+        },
+        {
+          name: "교통이용장소",
+          value: 63,
+        },
+        {
+          name: "교육",
+          value: 34,
+        },
+        {
+          name: "학교",
+          value: 51,
+        },
+        {
+          name: "병원",
+          value: 45,
+        },
+      ],
+    },
+    {
+      category: "Person",
+      value: 16.9,
+      itemList: [
+        {
+          name: "고객",
+          value: 23,
+        },
+        {
+          name: "가족",
+          value: 62,
+        },
+        {
+          name: "파트너",
+          value: 52,
+        },
+        {
+          name: "인재",
+          value: 78,
+        },
+        {
+          name: "사람",
+          value: 55,
+        },
+      ],
+    },
   ];
 
-  didpTpopChart.reDataBinding(data);
+  didpTpopChart.reDataBinding(dataWatcher.data);
 }
 /*
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
