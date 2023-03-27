@@ -235,8 +235,6 @@
       templateField: "labelSettings",
     });
 
-    function labelInput() {}
-
     // 값(변수) 변경될 때마다 콜백 메소드 호출
     dataWatcher.callback(() => {
       // 연령별 데이터
@@ -310,6 +308,13 @@
   let observerClassIsStarts = new Array();
   let observerClassIsCompletes = new Array();
 
+  // transition 초기화
+  function resetTransition(_data, _idx) {
+    $tit[_idx].innerText = "";
+    $titValue[_idx].innerText = "";
+    $rankItem[_idx].innerText = "";
+  }
+
   // transition 설정
   function setTransition(_data, _idx) {
     $tit[_idx].innerText = _data.category;
@@ -328,9 +333,6 @@
       }
     });
   }
-
-  // transition 초기화
-  function resetTransition(_data, _idx) {}
 
   // observerClass 설정
   function updateState(_data, _idx) {
