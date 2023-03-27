@@ -175,7 +175,7 @@
   });
 
   // 초기값;
-  fetch(`${SERVER.assets}/json/slide2_wordcloud-gender-data.json`)
+  fetch(`${SERVER.assets}/json/slide2_wordcloud-gender-data.json${window.cache}`)
     .then((_response) => {
       return _response.json();
     })
@@ -280,7 +280,7 @@
   });
 
   // 초기값;
-  fetch(`${SERVER.assets}/json/slide2_wordcloud-age-data.json`)
+  fetch(`${SERVER.assets}/json/slide2_wordcloud-age-data.json${window.cache}`)
     .then((_response) => {
       return _response.json();
     })

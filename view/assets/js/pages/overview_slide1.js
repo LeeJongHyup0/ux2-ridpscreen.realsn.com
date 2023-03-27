@@ -282,7 +282,7 @@
   });
 
   // 초기값;
-  fetch(`${SERVER.assets}/json/slide1_wordcloud-data.json`)
+  fetch(`${SERVER.assets}/json/slide1_wordcloud-data.json${window.cache}`)
     .then((_response) => {
       return _response.json();
     })
