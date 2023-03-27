@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta name="generator" content="Hugo 0.104.3" />
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=991" />
@@ -46,10 +45,26 @@
     
 
 
-<main id="container" class="main" data-header-hide="true" data-footer-hide="true" role="main">  
-  <script>
-    window.location.href = "./view/regional";
-  </script>
+<main id="container" class="notfound" role="main">
+  <h2 class="visually-hidden">페이지를 찾을수 없습니다.</h2>
+
+  
+  <section class="l-section-notfound">
+    <header class="l-section-notfound__header">
+      <i class="icon-svg-emotion-negative" title="부정"></i>
+      <h3>Not Found</h3>
+    </header>
+    <main class="l-section-notfound-body">
+        <article class="l-article-notfound">
+          <main class="l-article-notfound-body">
+            <p class="l-article-notfound-body__txt">잘못된 경로로 접근하셨습니다.</p>
+            <p class="l-article-notfound-body__txt">올바른 경로로 서비스를 이용해 주십시오.</p>
+            <button type="button" onclick="history.back();" class="btn btn-primary rounded-pill" type="button"><span class="txt">이전 페이지로 이동</span></button>
+          </main>
+        </article>
+    </main>
+  </section>
+  
 </main>
 
 
