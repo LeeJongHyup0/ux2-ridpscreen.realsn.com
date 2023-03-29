@@ -398,7 +398,7 @@
   // transition 설정
   function setTransition(_data, _idx, _maxIndex) {
     $ages[_idx].innerText = _data.name;
-    $cnts[_idx].innerText = _data.value;
+    $cnts[_idx].innerText = _data.label;
     $bars[_maxIndex].closest(".col").classList.add("col-is-active");
     $bars[_idx].style.height = `${_data.value}%`;
     $bars[_idx].style.transitionDelay = `${_idx * 0.15}s`;
@@ -452,13 +452,17 @@
     }
   });
 
-  // 초기값;
+  /**  초기값;
+   *   name : 연령
+   *   value : progressBar의 반영되는 값
+   *   label : %로 나타나는 수치 값
+   */
   dataWatcher.data = [
-    { name: "10대", value: 19 },
-    { name: "20대", value: 40 },
-    { name: "30대", value: 44.1 },
-    { name: "40대", value: 10.2 },
-    { name: "50대", value: 100 },
+    { name: "10대", value: 19, label: 16 },
+    { name: "20대", value: 60, label: 8 },
+    { name: "30대", value: 44, label: 10 },
+    { name: "40대", value: 30, label: 43 },
+    { name: "50대", value: 60, label: 23 },
   ];
 }
 /*
