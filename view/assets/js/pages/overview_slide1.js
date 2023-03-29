@@ -459,7 +459,7 @@
    */
   dataWatcher.data = [
     { name: "10대", value: 19, label: 16 },
-    { name: "20대", value: 60, label: 8 },
+    { name: "20대", value: 65, label: 8 },
     { name: "30대", value: 44, label: 10 },
     { name: "40대", value: 30, label: 43 },
     { name: "50대", value: 60, label: 23 },
