@@ -19,24 +19,24 @@
     { category: "1/3", snps: 35, pareto: 30 },
     { category: "1/4", snps: 25, pareto: 40 },
     { category: "1/5", snps: 15, pareto: 20 },
-    { category: "1/6", snps: -25, pareto: 40 },
-    { category: "1/7", snps: -35, pareto: 60 },
-    { category: "1/8", snps: -45, pareto: 10 },
-    { category: "1/9", snps: -55, pareto: 15 },
+    { category: "1/6", snps: 25, pareto: 40 },
+    { category: "1/7", snps: 35, pareto: 60 },
+    { category: "1/8", snps: 45, pareto: 10 },
+    { category: "1/9", snps: 55, pareto: 15 },
     { category: "1/10", snps: 12, pareto: 7 },
-    { category: "1/11", snps: -9, pareto: 12 },
+    { category: "1/11", snps: 9, pareto: 12 },
     { category: "1/12", snps: 22, pareto: 12 },
     { category: "1/13", snps: 94, pareto: 42 },
     { category: "1/14", snps: 94, pareto: 62 },
-    { category: "1/15", snps: -88, pareto: 52 },
-    { category: "1/16", snps: -65, pareto: 2 },
+    { category: "1/15", snps: 88, pareto: 52 },
+    { category: "1/16", snps: 65, pareto: 2 },
     { category: "1/17", snps: 93, pareto: 12 },
     { category: "1/18", snps: 41, pareto: 22 },
     { category: "1/19", snps: 41, pareto: 12 },
     { category: "1/20", snps: 41, pareto: 12 },
     { category: "1/21", snps: 41, pareto: 14 },
     { category: "1/22", snps: 41, pareto: 12 },
-    { category: "1/23", snps: -41, pareto: 12 },
+    { category: "1/23", snps: 41, pareto: 12 },
     { category: "1/24", snps: 41, pareto: 22 },
     { category: "1/25", snps: 41, pareto: 42 },
     { category: "1/26", snps: 41, pareto: 12 },
@@ -324,12 +324,7 @@
 
     itemList.forEach((_item, _itemIdx) => {
       if (5 > _itemIdx) {
-        $rankItem[_idx].insertAdjacentHTML(
-          "beforeend",
-          `<li class="rank-list__item pb-10"><span class="rank-list__cnt cnt fs-16 fw-600 mr-10">0${_itemIdx + 1}</span><span class="rank-list__tit">${
-            _item.name
-          }</span></li>`
-        );
+        $rankItem[_idx].insertAdjacentHTML("beforeend", `<li class="rank-list__item pb-10"><span class="rank-list__cnt cnt fs-16 fw-600 mr-10">0${_itemIdx + 1}</span><span class="rank-list__tit">${_item.name}</span></li>`);
       }
     });
   }
